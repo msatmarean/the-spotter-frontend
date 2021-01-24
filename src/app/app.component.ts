@@ -49,8 +49,16 @@ export class AppComponent implements OnInit {
 
   }
 
+  isUserLoggedIn(): boolean {
+    return this.securityService.isUserLoggedIn();
+  }
+
   setBreadcrumb(event: any) {
     this.breadcrumb = event;
+  }
+
+  getPictureUrl(): string {
+    return this.userService.userInfo.pictureUrl;
   }
 
   getIdpAuthorizationCodeRequestUrl(): string {

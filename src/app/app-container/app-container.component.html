@@ -24,7 +24,7 @@
 		</mat-nav-list>
 	</mat-drawer>
 	<mat-drawer-content class="container-content">
-		<div>{{selected}}</div>
+		<!-- <div>{{selected}}</div> -->
 		<app-food-directory *ngIf="selectedParent=='Food directory' && selectedChild == 'Manage foods'">
 		</app-food-directory>
 		<manage-categories *ngIf="selectedParent=='Food directory' && selectedChild == 'Manage categories'">

@@ -33,4 +33,11 @@ export class UserComponent implements OnInit {
     this.macros.calloriesGoal = this.userService.calculateCalories(this.macros.carbsGoal, this.macros.proteinsGoal, this.macros.fatsGoal);
   }
 
+  getPictureUrl(): string {
+    return this.userService.userInfo.pictureUrl;
+  }
+
+  getUserName(): string {
+    return this.userService.userInfo.name;
+  }
 }

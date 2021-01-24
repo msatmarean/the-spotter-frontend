@@ -1,8 +1,8 @@
 <mat-grid-list cols="4" rowHeight="180px">
   <mat-grid-tile [colspan]="1" [rowspan]="1">
     <div style="width: 80%;">
-      <div><img class="user-icon" src={{userService.userInfo.pictureUrl}}></div>
-      <div>{{userService.userInfo.name}}</div>
+      <div><img class="user-icon" src={{getPictureUrl()}}></div>
+      <div>{{getUserName()}}</div>
     </div>
   </mat-grid-tile>
 

@@ -6,8 +6,7 @@
 	<span class="title"> The Spotter</span>
 	<span class="breadcrumb">{{breadcrumb}}</span>
 	<span class="example-spacer"></span>
-	<img *ngIf="securityService.isUserLoggedIn()" class="user-icon" src={{userService.userInfo.pictureUrl}}
-		[matMenuTriggerFor]="menu">
+	<img *ngIf="isUserLoggedIn()" class="user-icon" src={{getPictureUrl()}} [matMenuTriggerFor]="menu">
 	<mat-menu #menu="matMenu">
 		<button mat-menu-item (click)="openUserPage()">
 			<mat-icon>person</mat-icon><span>Settings</span>
@@ -16,7 +15,7 @@
 			<mat-icon>exit_to_app</mat-icon><span>Logout</span>
 		</button>
 	</mat-menu>
-	<a mat-raised-button *ngIf="!securityService.isUserLoggedIn()" href={{getIdpAuthorizationCodeRequestUrl()}}>
+	<a mat-raised-button *ngIf="!isUserLoggedIn()" href={{getIdpAuthorizationCodeRequestUrl()}}>
 		<mat-icon style="width: 40px; height:20px" svgIcon="logo"></mat-icon> Login
 	</a>
 </mat-toolbar>
