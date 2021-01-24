@@ -1,0 +1,27 @@
+<mat-toolbar>
+	<button mat-icon-button (click)="toggleDrawer()">
+		<mat-icon>menu</mat-icon>
+	</button>
+	<mat-icon>accessibility_new</mat-icon>
+	<span class="title"> The Spotter</span>
+	<span class="breadcrumb">{{breadcrumb}}</span>
+	<span class="example-spacer"></span>
+	<img *ngIf="securityService.isUserLoggedIn()" class="user-icon" src={{userService.userInfo.pictureUrl}}
+		[matMenuTriggerFor]="menu">
+	<mat-menu #menu="matMenu">
+		<button mat-menu-item (click)="openUserPage()">
+			<mat-icon>person</mat-icon><span>Settings</span>
+		</button>
+		<button mat-menu-item (click)="logOut()">
+			<mat-icon>exit_to_app</mat-icon><span>Logout</span>
+		</button>
+	</mat-menu>
+	<a mat-raised-button *ngIf="!securityService.isUserLoggedIn()" href={{getIdpAuthorizationCodeRequestUrl()}}>
+		<mat-icon style="width: 40px; height:20px" svgIcon="logo"></mat-icon> Login
+	</a>
+</mat-toolbar>
+<app-app-container #container (selection)="setBreadcrumb($event)"> </app-app-container>
+<mat-toolbar>
+	<mat-icon>accessibility_new</mat-icon>
+	<span class="title"> The Spotter</span>
+</mat-toolbar>

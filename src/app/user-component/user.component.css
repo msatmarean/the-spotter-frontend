@@ -1,0 +1,15 @@
+.table-container {
+  position: relative;
+  max-height: fit-content;
+  overflow: auto;
+  padding: 10px;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-column-name,
+.mat-column-descripiton {
+  width: 40%;
+}

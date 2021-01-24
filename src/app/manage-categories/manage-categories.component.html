@@ -1,0 +1,23 @@
+<div>
+	<p>Manage Categories</p>
+	<mat-selection-list #catComponent [multiple]="true"
+		(selectionChange)="onGroupsChange(catComponent.selectedOptions.selected)">
+		<mat-list-option *ngFor="let cat of categories" [value]="cat.id">
+			{{cat.catName}}
+		</mat-list-option>
+	</mat-selection-list>
+	<table class="padding10">
+		<tr>
+			<th>
+				<button mat-mini-fab (click)="addNew()">
+					<mat-icon>add</mat-icon>
+				</button>
+			</th>
+			<th>
+				<button mat-mini-fab (click)="delete()" [disabled]="selected.length<1">
+					<mat-icon>delete</mat-icon>
+				</button>
+			</th>
+		</tr>
+	</table>
+</div>

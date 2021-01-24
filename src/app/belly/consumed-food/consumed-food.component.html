@@ -1,0 +1,52 @@
+<div class="table-container">
+  <table mat-table #MatTable [dataSource]="data" class="table" matSort matSortActive="name" matSortDisableClear
+    matSortDirection="asc">
+    <ng-container matColumnDef="name" class="col-name-desc">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let row">
+        <span>{{row.food.foodDescription.name}}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="descripiton" class="col-name-desc">
+      <th mat-header-cell *matHeaderCellDef>Descripiton</th>
+      <td mat-cell *matCellDef="let row">
+        <span>{{row.food.foodDescription.description}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="qty" class="col-qty-action">
+      <th mat-header-cell *matHeaderCellDef>Quantity in g</th>
+      <td mat-cell *matCellDef="let row">
+        <mat-form-field *ngIf="row.edit" appearance="fill">
+          <input matInput type="number" [(ngModel)]="row.qty" value="{{row.qty}}" />
+        </mat-form-field>
+        <span *ngIf="!row.edit">{{row.qty}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action" class="col-qty-action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <span style="padding-right:5px;">
+          <button mat-mini-fab (click)="delete(row.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<div style="width: fit-content;">
+  <p><b>Total</b> Callories: {{calories}} | Proteins: {{proteins}} | Carbohidrates: {{carbs}} | Fats: {{fats}}</p>
+</div>
+<mat-divider></mat-divider>
+<div style="width: fit-content;">
+  <p><b>Available callories:</b> {{getAvailableCallories()}}</p>
+  <p><b> Proteins: </b> {{getAvailableProteins()}}</p>
+  <p><b>Carbohidrates:</b> {{getAvailableCarbs()}}</p>
+  <p><b>Fats:</b> {{getAvailableFats()}}</p>
+</div>

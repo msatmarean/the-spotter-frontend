@@ -1,0 +1,17 @@
+.container {
+  height: fit-content;
+  min-height: 90%;
+  width: auto;
+}
+
+.submenu {
+  margin: 8px;
+}
+
+.container-content {
+  padding: 30px;
+}
+
+.app-sidenav {
+  width: auto;
+}

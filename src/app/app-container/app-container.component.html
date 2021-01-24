@@ -1,0 +1,36 @@
+<mat-drawer-container class="container">
+	<mat-drawer #drawer mode="side" opened class="app-sidenav">
+		<mat-nav-list>
+			<mat-list-item (click)=" setParent('Track food')">
+				<mat-icon>kitchen</mat-icon>Track Food
+			</mat-list-item>
+			<mat-list-item *ngIf="selectedParent=='track'">
+				<span>Add</span>
+			</mat-list-item>
+			<mat-list-item *ngIf="selectedParent=='track'">
+				<span>Remove</span>
+			</mat-list-item>
+			<mat-divider></mat-divider>
+			<mat-list-item (click)="setParent('Food directory')">
+				<mat-icon>restaurant</mat-icon>Food Directory
+			</mat-list-item>
+			<mat-list-item *ngIf="selectedParent=='Food directory'" (click)="setChild('Manage foods')">
+				<span>Manage foods</span>
+			</mat-list-item>
+			<mat-list-item *ngIf="selectedParent=='Food directory'" (click)="setChild('Manage categories')">
+				<span>Manage categories</span>
+			</mat-list-item>
+			<mat-divider></mat-divider>
+		</mat-nav-list>
+	</mat-drawer>
+	<mat-drawer-content class="container-content">
+		<div>{{selected}}</div>
+		<app-food-directory *ngIf="selectedParent=='Food directory' && selectedChild == 'Manage foods'">
+		</app-food-directory>
+		<manage-categories *ngIf="selectedParent=='Food directory' && selectedChild == 'Manage categories'">
+		</manage-categories>
+		<app-belly *ngIf="selectedParent=='Track food'"> </app-belly>
+		<user-component *ngIf="selectedParent=='User'"></user-component>
+	</mat-drawer-content>
+	<!-- drawer.toggle() -->
+</mat-drawer-container>

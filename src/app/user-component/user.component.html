@@ -1,0 +1,67 @@
+<mat-grid-list cols="4" rowHeight="180px">
+  <mat-grid-tile [colspan]="1" [rowspan]="1">
+    <div style="width: 80%;">
+      <div><img class="user-icon" src={{userService.userInfo.pictureUrl}}></div>
+      <div>{{userService.userInfo.name}}</div>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="3" [rowspan]="1">
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="4" [rowspan]="2">
+    <div style="width: 100%;">
+      <div>
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="true" hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Daily callories goal
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Total Callories</mat-label>
+                <input matInput disabled type="number" [(ngModel)]="macros.calloriesGoal"
+                  value="{{macros.calloriesGoal}}">
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Proteins</mat-label>
+                <input matInput type="number" (change)="calculateCalories()" [(ngModel)]="macros.proteinsGoal"
+                  value="{{macros.proteinsGoal}}">
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Carbohidrates</mat-label>
+                <input matInput type="number" (change)="calculateCalories()" [(ngModel)]="macros.carbsGoal"
+                  value="{{macros.carbsGoal}}">
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field class="example-full-width">
+                <mat-label>Fats</mat-label>
+                <input matInput type="number" (change)="calculateCalories()" [(ngModel)]="macros.fatsGoal"
+                  value="{{macros.fatsGoal}}">
+              </mat-form-field>
+            </div>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+      <div style="padding:10px">
+        <button mat-mini-fab (click)=" save()">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </div>
+
+  </mat-grid-tile>
+
+</mat-grid-list>
