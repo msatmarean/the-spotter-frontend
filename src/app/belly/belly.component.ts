@@ -14,6 +14,7 @@ import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { BellyEatRequst } from "../model/belly-eat-requst";
 import { ConsumedFoodComponent } from "./consumed-food/consumed-food.component";
 import { UserService } from "../services/user-service/user-service";
+import { ApiPaths } from "../services/api.paths";
 @Component({
   selector: "app-belly",
   templateUrl: "./belly.component.html",
@@ -65,7 +66,8 @@ export class BellyComponent implements OnInit {
     private httpClient: HttpClient,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
-    private userService: UserService
+    private userService: UserService,
+    private apiPaths: ApiPaths
   ) { }
 
   search() {
@@ -103,7 +105,7 @@ export class BellyComponent implements OnInit {
     }
 
     this.httpClient
-      .get<any>("http://localhost:8080/backend/foods/find", {
+      .get<any>(this.apiPaths.FIND_FOODS, {
         params: httpParams
       })
       .toPromise()
@@ -120,7 +122,7 @@ export class BellyComponent implements OnInit {
 
   getFoodCategories() {
     this.httpClient
-      .get<FoodCategory[]>("http://localhost:8080/backend/categories/getAll")
+      .get<FoodCategory[]>(this.apiPaths.FIND_ALL_CATEGORIES)
       .subscribe((response: FoodCategory[]) => {
         this.foodCategories = response;
       });
@@ -156,7 +158,7 @@ export class BellyComponent implements OnInit {
           request.consumed = new Date().toJSON();
           this.isLoadingResults = true;
           this.httpClient
-            .post("http://localhost:8080/backend/belly/add", request)
+            .post(this.apiPaths.ADD_BELLY, request)
             .toPromise()
             .then(() => {
               this.consumedFood.search();

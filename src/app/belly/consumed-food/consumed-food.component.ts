@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { AfterViewInit, Component, OnInit } from "@angular/core";
+import { ApiPaths } from "src/app/services/api.paths";
 import { UserService } from "src/app/services/user-service/user-service";
 import { Belly } from "../../model/belly";
 
@@ -16,7 +17,7 @@ export class ConsumedFoodComponent implements AfterViewInit {
   proteins: number = 0;
   carbs: number = 0;
   fats: number = 0;
-  constructor(private httpClient: HttpClient, public userService: UserService) { }
+  constructor(private httpClient: HttpClient, public userService: UserService, private apiPaths: ApiPaths) { }
 
   ngAfterViewInit() {
     this.search();
@@ -25,7 +26,7 @@ export class ConsumedFoodComponent implements AfterViewInit {
   search() {
     this.resetCounters();
     this.httpClient
-      .get<any>("http://localhost:8080/backend/belly/consumedOn", {
+      .get<any>(this.apiPaths.BELLY_CONSUMED_ON, {
         params: new HttpParams().append("date", new Date().getTime().toString())
       })
       .toPromise()
@@ -44,7 +45,7 @@ export class ConsumedFoodComponent implements AfterViewInit {
 
   delete(id: number) {
     this.httpClient
-      .get<any>("http://localhost:8080/backend/belly/delete", {
+      .get<any>(this.apiPaths.DELETE_BELLY, {
         params: new HttpParams().append("id", id.toString())
       })
       .toPromise()

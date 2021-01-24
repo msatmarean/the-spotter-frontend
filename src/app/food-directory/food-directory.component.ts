@@ -13,6 +13,7 @@ import { FoodDirectory } from "../model/food-directory";
 import { MatSort } from "@angular/material/sort";
 import { FoodDescription } from "../model/food-description";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { ApiPaths } from "../services/api.paths";
 @Component({
   selector: "app-food-directory",
   templateUrl: "./food-directory.component.html",
@@ -60,7 +61,7 @@ export class FoodDirectoryComponent implements AfterViewInit, OnInit {
     });
   }
 
-  constructor(private httpClient: HttpClient, private snackBar: MatSnackBar) {}
+  constructor(private httpClient: HttpClient, private snackBar: MatSnackBar, private apiPaths: ApiPaths) { }
 
   editEnable(row: FoodDirectory): void {
     if (row.edit == true) {
@@ -104,7 +105,7 @@ export class FoodDirectoryComponent implements AfterViewInit, OnInit {
     }
 
     this.httpClient
-      .get<any>("http://localhost:8080/backend/foods/find", {
+      .get<any>(this.apiPaths.FIND_FOODS, {
         params: httpParams
       })
       .toPromise()
@@ -121,7 +122,7 @@ export class FoodDirectoryComponent implements AfterViewInit, OnInit {
 
   getFoodCategories() {
     this.httpClient
-      .get<FoodCategory[]>("http://localhost:8080/backend/categories/getAll")
+      .get<FoodCategory[]>(this.apiPaths.FIND_ALL_CATEGORIES)
       .subscribe((response: FoodCategory[]) => {
         this.foodCategories = response;
       });
@@ -135,7 +136,7 @@ export class FoodDirectoryComponent implements AfterViewInit, OnInit {
     newRow.foodCategory.id = 1;
 
     this.httpClient
-      .post("http://localhost:8080/backend/foods/create", newRow)
+      .post(this.apiPaths.CREATE_FOODS, newRow)
       .toPromise()
       .finally(() => {
         this.doSearch(FoodDirectoryComponent.NEW_FOOD, null, null, "0");
@@ -155,8 +156,8 @@ export class FoodDirectoryComponent implements AfterViewInit, OnInit {
     this.calculateCalories(row);
 
     this.httpClient
-      .put("http://localhost:8080/backend/foods/update", row)
-      .subscribe(() => {});
+      .put(this.apiPaths.UPDATE_FOODS, row)
+      .subscribe(() => { });
 
     this.search();
   }
@@ -179,7 +180,7 @@ export class FoodDirectoryComponent implements AfterViewInit, OnInit {
     this.isLoadingResults = true;
     console.debug("delete");
     this.httpClient
-      .get("http://localhost:8080/backend/foods/delete", {
+      .get(this.apiPaths.DELETE_FOODS, {
         params: new HttpParams().append("id", row.id.toString())
       })
       .toPromise()

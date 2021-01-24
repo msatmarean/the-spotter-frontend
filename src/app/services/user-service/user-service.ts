@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { UserInfo } from "src/app/model/user-info";
 import { UserUpdateRequest } from "src/app/model/user-update-request";
+import { ApiPaths } from "../api.paths";
 import { SecurityService } from "../security/security.component";
 
 @Injectable({
@@ -10,12 +11,12 @@ import { SecurityService } from "../security/security.component";
 })
 export class UserService {
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient, private apiPaths: ApiPaths) { }
 
     userInfo: UserInfo = new UserInfo();
 
     getUserInfo(): Promise<any> {
-        return this.httpClient.get<UserInfo>("http://localhost:8080/backend/user/info").toPromise().then((response: UserInfo) => {
+        return this.httpClient.get<UserInfo>(this.apiPaths.USER_INFO).toPromise().then((response: UserInfo) => {
             this.userInfo = response;
             this.userInfo.calloriesGoal = this.calculateCalories(response.carbsGoal, response.proteinsGoal, response.fatsGoal);
         });
@@ -30,7 +31,7 @@ export class UserService {
     }
 
     saveMacros(macros: UserUpdateRequest) {
-        this.httpClient.put("http://localhost:8080/backend/user/info", macros).subscribe(() => {
+        this.httpClient.put(this.apiPaths.USER_INFO, macros).subscribe(() => {
             this.userInfo.calloriesGoal = macros.calloriesGoal;
             this.userInfo.carbsGoal = macros.carbsGoal;
             this.userInfo.proteinsGoal = macros.proteinsGoal;

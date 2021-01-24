@@ -62,6 +62,7 @@ import { UserComponent } from "./user-component/user.component";
 import { UserService } from "./services/user-service/user-service";
 import { AddCategoryDialog, ManageCategories } from "./manage-categories/manage-categories.component";
 import { HttpInterceptorService } from "./services/security/http-interceptor";
+import { ApiPaths } from "./services/api.paths";
 
 const appRoutes: Routes = [
   { path: 'home', component: AppComponent },
@@ -146,6 +147,7 @@ const appRoutes: Routes = [
       multi: true
     },
     UserService,
+    ApiPaths,
     HttpInterceptorService,
     {
       provide: HTTP_INTERCEPTORS,

@@ -8,18 +8,19 @@ import {
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { SecurityService } from "./security.component";
+import { ApiPaths } from "../api.paths";
 
 @Injectable()
 export class TokenInterceptorService implements HttpInterceptor {
 
-    constructor() {
+    constructor(private apiPaths: ApiPaths) {
     }
 
     readonly HEADER_NAME: string = "Authorization";
     readonly BEARER: string = "Bearer ";
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (request.url.startsWith("http://localhost:8080/")) {
+        if (request.url.startsWith(this.apiPaths.API_BASE_URL)) {
             const token: string = sessionStorage.getItem(SecurityService.TOKEN);
             if (token) {
                 let headers: HttpHeaders = request.headers;

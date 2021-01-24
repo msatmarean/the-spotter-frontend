@@ -8,6 +8,7 @@ import {
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { MatList, MatListOption } from "@angular/material/list";
 import { FoodCategory } from "../model/food-category";
+import { ApiPaths } from "../services/api.paths";
 @Component({
   selector: "manage-categories",
   templateUrl: "./manage-categories.component.html",
@@ -15,7 +16,7 @@ import { FoodCategory } from "../model/food-category";
 })
 export class ManageCategories implements OnInit {
 
-  constructor(private httpClient: HttpClient, public dialog: MatDialog) {
+  constructor(private httpClient: HttpClient, public dialog: MatDialog, private apiPaths: ApiPaths) {
   }
 
   categories: FoodCategory[];
@@ -27,7 +28,7 @@ export class ManageCategories implements OnInit {
 
   getFoodCategories() {
     this.httpClient
-      .get<FoodCategory[]>("http://localhost:8080/backend/categories/getAll")
+      .get<FoodCategory[]>(this.apiPaths.FIND_ALL_CATEGORIES)
       .subscribe((response: FoodCategory[]) => {
         this.categories = response;
       });
@@ -37,7 +38,7 @@ export class ManageCategories implements OnInit {
     this.dialog.open(AddCategoryDialog).afterClosed().subscribe((name: string) => {
       if (name != undefined) {
         this.httpClient
-          .post("http://localhost:8080/backend/categories/create?name=" + name, null)
+          .post(this.apiPaths.CREATE_CATEGORIES + "?name=" + name, null)
           .subscribe(() => {
             this.getFoodCategories();
           });
@@ -52,7 +53,7 @@ export class ManageCategories implements OnInit {
   delete() {
 
     this.httpClient
-      .put("http://localhost:8080/backend/categories/delete", this.selected)
+      .put(this.apiPaths.DELETE_CATEGORIES, this.selected)
       .subscribe(() => {
         this.getFoodCategories();
       });
