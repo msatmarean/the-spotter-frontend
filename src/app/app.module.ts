@@ -13,7 +13,6 @@ import { PortalModule } from "@angular/cdk/portal";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { CdkStepperModule } from "@angular/cdk/stepper";
 import { CdkTableModule } from "@angular/cdk/table";
-import { CdkTreeModule } from "@angular/cdk/tree";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatBottomSheetModule } from "@angular/material/bottom-sheet";
@@ -45,7 +44,6 @@ import { MatTableModule } from "@angular/material/table";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { MatTreeModule } from "@angular/material/tree";
 import { OverlayModule } from "@angular/cdk/overlay";
 import { AppContainerComponent } from "./app-container/app-container.component";
 import { FoodDirectoryComponent } from "./food-directory/food-directory.component";
@@ -80,7 +78,6 @@ const appRoutes: Routes = [
     ClipboardModule,
     CdkStepperModule,
     CdkTableModule,
-    CdkTreeModule,
     DragDropModule,
     MatAutocompleteModule,
     MatBadgeModule,
@@ -116,7 +113,6 @@ const appRoutes: Routes = [
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatTreeModule,
     OverlayModule,
     PortalModule,
     ScrollingModule,
