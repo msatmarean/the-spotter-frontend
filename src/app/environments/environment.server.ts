@@ -5,7 +5,7 @@ export const environment: Environment = {
     protocol: "https://",
     apiRoot: "thespotter.herokuapp.com",
     backendContextPath: "",
-    redirectUri: "https://thespotter.herokuapp.com/authConsumerService",
+    redirectUri: "https://thespotterui.herokuapp.com/authConsumerService",
     idpAuthorizationCodeRequestEndpoint: "https://accounts.google.com/o/oauth2/v2/auth",
     idpTokenRequestEndpoint: "https://oauth2.googleapis.com/token",
     clientId: "870757666473-jqu3779nodvb44uuvbn67ua08sb5cl2e.apps.googleusercontent.com",
