@@ -1,10 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
 import { UserInfo } from "src/app/model/user-info";
 import { UserUpdateRequest } from "src/app/model/user-update-request";
 import { ApiPaths } from "../api.paths";
-import { SecurityService } from "../security/security.component";
 
 @Injectable({
     providedIn: "root"

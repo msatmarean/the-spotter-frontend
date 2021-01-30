@@ -178,7 +178,6 @@ export class FoodDirectoryComponent implements AfterViewInit, OnInit {
 
   delete(row: FoodDirectory) {
     this.isLoadingResults = true;
-    console.debug("delete");
     this.httpClient
       .get(this.apiPaths.DELETE_FOODS, {
         params: new HttpParams().append("id", row.id.toString())

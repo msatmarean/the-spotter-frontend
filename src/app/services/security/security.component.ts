@@ -56,7 +56,6 @@ export class SecurityService {
     }
 
     isUserLoggedIn(): boolean {
-        console.debug(sessionStorage.getItem(SecurityService.TOKEN));
         return !(sessionStorage.getItem(SecurityService.TOKEN) == null);
     }
 
