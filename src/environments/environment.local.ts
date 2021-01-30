@@ -4,7 +4,7 @@ export const environment: Environment = {
     target: "L",
     protocol: "http://",
     apiRoot: "localhost:8080",
-    backendContextPath: "/backend",
+    backendContextPath: "",
     redirectUri: "http://localhost:4200/authConsumerService",
     idpAuthorizationCodeRequestEndpoint: "https://accounts.google.com/o/oauth2/v2/auth",
     idpTokenRequestEndpoint: "https://oauth2.googleapis.com/token",
