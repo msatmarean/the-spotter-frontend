@@ -48,6 +48,7 @@
   },
   "scripts": {
     "ng": "ng",
+    "local": "ng build",
     "start": "node server.js",
     "build": "ng build",
     "test": "ng test",

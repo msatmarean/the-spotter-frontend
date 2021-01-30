@@ -3,18 +3,19 @@ import { Injectable } from "@angular/core";
 import { UserService } from "../user-service/user-service";
 import { UserInfo } from "../../model/user-info";
 import { TokenRequestModel } from "./token-request-model";
+import { environment } from "../../environments/environment";
 
 @Injectable({
     providedIn: "root"
 })
 export class SecurityService {
-    readonly CLIENT_ID = "870757666473-jqu3779nodvb44uuvbn67ua08sb5cl2e.apps.googleusercontent.com";
-    readonly CLIENT_SECRET = "0NoVv8xZRGmtz69h519TMjIB";
+    readonly CLIENT_ID = environment.clientId;
+    readonly CLIENT_SECRET = environment.clientSecret;
     readonly RESPONSE_TYPE = "code";
     readonly SCOPE = "openid+profile+email";
-    readonly REDIRECT_URI = "http://localhost:4200/authConsumerService";
-    readonly IDP_AUTHORIZATION_CODE_REQUEST_ENDPOINT = "https://accounts.google.com/o/oauth2/v2/auth";
-    readonly IDP_TOKEN_REQUEST_ENDPOINT = "https://oauth2.googleapis.com/token";
+    readonly REDIRECT_URI = environment.redirectUri;
+    readonly IDP_AUTHORIZATION_CODE_REQUEST_ENDPOINT = environment.idpAuthorizationCodeRequestEndpoint;
+    readonly IDP_TOKEN_REQUEST_ENDPOINT = environment.idpTokenRequestEndpoint;
     readonly STATE = "t_LDYf9I_uZkyfdRigGsGbHpyux87I_ROfSNZUtE3f0%3D";
     static readonly TOKEN = "token"
 
