@@ -21,7 +21,9 @@
     "core-js": "3.8.1",
     "rxjs": "6.6.3",
     "tslib": "2.0.3",
-    "zone.js": "0.11.3",
+    "zone.js": "0.11.3"
+  },
+  "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.4",
     "@angular/cli": "~11.0.4",
     "@angular/compiler-cli": "~11.0.4",
@@ -42,7 +44,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --prod",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
