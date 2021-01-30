@@ -1,4 +1,4 @@
-import { environment } from "../environments/environment";
+import { environment } from "../../environments/environment";
 
 export class ApiPaths {
     API_BASE_URL: string = environment.protocol + environment.apiRoot + environment.backendContextPath;

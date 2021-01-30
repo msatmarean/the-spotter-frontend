@@ -38,6 +38,24 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "local": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.server.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ],
+              "optimization": false,
+              "outputHashing": "none",
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "statsJson": false,
+              "progress": false
             }
           }
         },
@@ -49,6 +67,9 @@
           "configurations": {
             "production": {
               "browserTarget": "the-spotter:build:production"
+            },
+            "local": {
+              "browserTarget": "the-spotter:build:local"
             }
           }
         },
