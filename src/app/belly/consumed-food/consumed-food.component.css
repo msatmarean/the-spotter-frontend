@@ -2,14 +2,22 @@
   position: relative;
   max-height: fit-content;
   overflow: auto;
-  padding: 10px;
 }
 
 table {
   width: 100%;
 }
 
-.mat-column-name,
-.mat-column-descripiton {
-  width: 40%;
+.mat-column-name
+{
+  width: 100%;
+}
+
+.mat-column-qty, .mat-column-calories, .mat-column-action
+{
+  width: fit-content;
+}
+
+.mat-cell, .mat-header-cell {
+  padding: 0px 0px 0px 0 !important;
 }

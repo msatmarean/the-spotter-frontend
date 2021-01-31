@@ -1,21 +1,21 @@
 <div class="table-container">
-  <table mat-table #MatTable [dataSource]="data" class="table" matSort matSortActive="name" matSortDisableClear
-    matSortDirection="asc">
+  <table mat-table #MatTable [dataSource]="data" class="table" matSort matSortActive="food.foodDescription.name"
+    matSortDisableClear matSortDirection="asc">
     <ng-container matColumnDef="name" class="col-name-desc">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
       <td mat-cell *matCellDef="let row">
         <span>{{row.food.foodDescription.name}}</span>
       </td>
     </ng-container>
-    <ng-container matColumnDef="descripiton" class="col-name-desc">
-      <th mat-header-cell *matHeaderCellDef>Descripiton</th>
+    <ng-container matColumnDef="calories">
+      <th mat-header-cell *matHeaderCellDef>Calories</th>
       <td mat-cell *matCellDef="let row">
-        <span>{{row.food.foodDescription.description}}</span>
+        <span>{{row.food.calories}}</span>
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="qty" class="col-qty-action">
-      <th mat-header-cell *matHeaderCellDef>Quantity in g</th>
+    <ng-container matColumnDef="qty">
+      <th mat-header-cell *matHeaderCellDef>Quantity</th>
       <td mat-cell *matCellDef="let row">
         <mat-form-field *ngIf="row.edit" appearance="fill">
           <input matInput type="number" [(ngModel)]="row.qty" value="{{row.qty}}" />
@@ -24,14 +24,14 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="action" class="col-qty-action">
+    <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
-        <span style="padding-right:5px;">
-          <button mat-mini-fab (click)="delete(row.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </span>
+        <!-- <span style="padding-right:5px;"> -->
+        <button mat-button (click)="delete(row.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <!-- </span> -->
       </td>
     </ng-container>
 

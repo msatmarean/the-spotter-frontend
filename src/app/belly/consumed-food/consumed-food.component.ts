@@ -10,7 +10,7 @@ import { Belly } from "../../model/belly";
   styleUrls: ["./consumed-food.component.css"]
 })
 export class ConsumedFoodComponent implements AfterViewInit {
-  displayedColumns: string[] = ["name", "descripiton", "qty", "action"];
+  displayedColumns: string[] = ["name", "calories", "qty", "action"];
 
   data: Belly[] = [];
   calories: number = 0;

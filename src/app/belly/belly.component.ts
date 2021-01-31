@@ -24,6 +24,7 @@ import { CommonSearchComponent } from "../common-search.component";
 })
 export class BellyComponent extends CommonSearchComponent {
 
+  @ViewChild("consumedFood")
   consumedFood: ConsumedFoodComponent;
 
   ngAfterViewInit() {
@@ -57,11 +58,9 @@ export class BellyComponent extends CommonSearchComponent {
           this.getHttpClient()
             .post(this.getApiPaths().ADD_BELLY, request)
             .toPromise()
-            .then(() => {
-              this.consumedFood.search();
-            })
             .finally(() => {
               this.isLoadingResults = false;
+              this.consumedFood.search();
             });
         }
       });
