@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { AfterViewInit, Component, OnInit } from "@angular/core";
 import { ApiPaths } from "src/app/services/api.paths";
-import { UserService } from "src/app/services/user-service/user-service";
+import { UserService } from "src/app/services/user-service";
 import { Belly } from "../../model/belly";
 
 @Component({

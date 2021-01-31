@@ -1,11 +1,10 @@
 <mat-toolbar>
-	<button mat-icon-button (click)="toggleDrawer()">
+	<button mat-icon-button [disabled]="!isUserLoggedIn()" (click)="toggleDrawer()">
 		<mat-icon>menu</mat-icon>
 	</button>
 	<mat-icon>accessibility_new</mat-icon>
 	<span class="title"> The Spotter</span>
-	<span class="breadcrumb">{{breadcrumb}}</span>
-	<span class="example-spacer"></span>
+	<span class="spacer"></span>
 	<img *ngIf="isUserLoggedIn()" class="user-icon" src={{getPictureUrl()}} [matMenuTriggerFor]="menu">
 	<mat-menu #menu="matMenu">
 		<button mat-menu-item (click)="openUserPage()">
@@ -19,7 +18,15 @@
 		<mat-icon style="width: 40px; height:20px" svgIcon="logo"></mat-icon> Login
 	</a>
 </mat-toolbar>
+
+<mat-toolbar *ngIf="breadcrumb!=undefined">
+	<div class="breadcrumb">{{breadcrumb}}</div>
+</mat-toolbar>
+
 <app-app-container #container (selection)="setBreadcrumb($event)"> </app-app-container>
+<div class="loading-shade" *ngIf="isLoading==true">
+	<mat-spinner></mat-spinner>
+</div>
 <mat-toolbar>
 	<mat-icon>accessibility_new</mat-icon>
 	<span class="title"> The Spotter</span>

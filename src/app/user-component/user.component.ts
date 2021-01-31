@@ -1,8 +1,8 @@
 
 import { Component, Input, OnInit } from "@angular/core";
-import { UserInfo } from "../model/user-info";
 import { UserUpdateRequest } from "../model/user-update-request";
-import { UserService } from "../services/user-service/user-service";
+import { SecurityService } from "../services/security/security.component";
+import { UserService } from "../services/user-service";
 
 
 @Component({
@@ -12,16 +12,21 @@ import { UserService } from "../services/user-service/user-service";
 })
 export class UserComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private securityService: SecurityService) { }
   macros: UserUpdateRequest = new UserUpdateRequest();;
-
+  isLoadingResults: boolean = false;
   ngOnInit(): void {
+    this.isLoadingResults = true;
     this.userService.getUserInfo().finally(() => {
 
       this.macros.carbsGoal = this.userService.userInfo.carbsGoal;
       this.macros.proteinsGoal = this.userService.userInfo.proteinsGoal;
       this.macros.fatsGoal = this.userService.userInfo.fatsGoal;
       this.macros.calloriesGoal = this.userService.userInfo.calloriesGoal;
+
+      this.isLoadingResults = false;
+    }).catch((ex: any) => {
+      this.securityService.logOut();
     });
   }
 

@@ -1,14 +1,8 @@
 <mat-drawer-container class="container">
-	<mat-drawer #drawer mode="side" opened class="app-sidenav">
+	<mat-drawer #drawer mode="side" closed class="app-sidenav">
 		<mat-nav-list>
-			<mat-list-item (click)=" setParent('Track food')">
+			<mat-list-item (click)=" setParent('Track food')" (click)=" setChild('Track food')">
 				<mat-icon>kitchen</mat-icon>Track Food
-			</mat-list-item>
-			<mat-list-item *ngIf="selectedParent=='track'">
-				<span>Add</span>
-			</mat-list-item>
-			<mat-list-item *ngIf="selectedParent=='track'">
-				<span>Remove</span>
 			</mat-list-item>
 			<mat-divider></mat-divider>
 			<mat-list-item (click)="setParent('Food directory')">

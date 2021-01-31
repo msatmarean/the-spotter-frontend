@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { MatDrawer } from "@angular/material/sidenav";
+import { ApplicationStateService } from "../services/application-state.service";
 
 @Component({
   selector: "app-app-container",
@@ -7,13 +8,17 @@ import { MatDrawer } from "@angular/material/sidenav";
   styleUrls: ["./app-container.component.css"]
 })
 export class AppContainerComponent implements OnInit {
-  constructor() { }
+  constructor(private applicationState: ApplicationStateService) {
+    this.isMobile = this.applicationState.getIsMobileResolution();
+  }
 
   ngOnInit() { }
 
   @Input()
   selectedParent: String;
   selectedChild: String;
+
+  isMobile: boolean;
 
   @ViewChild("drawer")
   drawer: MatDrawer;
@@ -32,6 +37,9 @@ export class AppContainerComponent implements OnInit {
 
   setChild(menu: string): void {
     this.selectedChild = menu;
+    if (this.isMobile) {
+      this.toggleDrawer()
+    }
     this.selection.emit(
       AppContainerComponent.BREADCRUMB_DELIMITER +
       this.selectedParent +
@@ -42,5 +50,13 @@ export class AppContainerComponent implements OnInit {
 
   toggleDrawer() {
     this.drawer.toggle();
+  }
+
+  closeDrawer() {
+    this.drawer.close();
+  }
+
+  openDrawer() {
+    this.drawer.open();
   }
 }

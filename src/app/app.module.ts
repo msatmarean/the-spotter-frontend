@@ -34,11 +34,12 @@ import { RouterModule, Routes } from "@angular/router";
 import { SecurityService } from "./services/security/security.component";
 import { TokenInterceptorService } from "./services/security/token-interceptor";
 import { UserComponent } from "./user-component/user.component";
-import { UserService } from "./services/user-service/user-service";
+import { UserService } from "./services/user-service";
 import { AddCategoryDialog, ManageCategories } from "./manage-categories/manage-categories.component";
 import { HttpInterceptorService } from "./services/security/http-interceptor";
 import { ApiPaths } from "./services/api.paths";
-
+import { MatCardModule } from '@angular/material/card';
+import { ApplicationStateService } from "./services/application-state.service";
 const appRoutes: Routes = [
   { path: 'home', component: AppComponent },
   { path: 'authConsumerService', component: AppComponent },
@@ -69,6 +70,7 @@ const appRoutes: Routes = [
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
+    MatCardModule,
     HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
@@ -97,6 +99,7 @@ const appRoutes: Routes = [
     },
     UserService,
     ApiPaths,
+    ApplicationStateService,
     HttpInterceptorService,
     {
       provide: HTTP_INTERCEPTORS,

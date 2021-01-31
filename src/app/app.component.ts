@@ -5,10 +5,9 @@ import {
 } from "@angular/material/dialog";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AppContainerComponent } from "./app-container/app-container.component";
-import { UserService } from "./services/user-service/user-service";
-import { UserInfo } from "./model/user-info";
+import { UserService } from "./services/user-service";
 
 import { SecurityService } from "./services/security/security.component";
 
@@ -23,7 +22,7 @@ const googleLogoURL =
 export class AppComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private securityService: SecurityService, private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer, private httpClinet: HttpClient, private userService: UserService) {
+    private domSanitizer: DomSanitizer, private httpClinet: HttpClient, private userService: UserService, private router: Router) {
     this.matIconRegistry.addSvgIcon(
       "logo",
       this.domSanitizer.bypassSecurityTrustResourceUrl(googleLogoURL));
@@ -33,19 +32,32 @@ export class AppComponent implements OnInit {
   selectedPage: string = "";
   @ViewChild("container")
   container: AppContainerComponent;
-
+  isLoading: boolean;
   ngOnInit(): void {
 
     this.route.queryParamMap.subscribe(params => {
       if (!this.securityService.isUserLoggedIn() && params.get("code") != null) {
-
+        this.isLoading = true;
         this.securityService.getAccessToken(params.get("state"), params.get("code"), params.get("scope"));
       }
     })
 
     if (this.securityService.isUserLoggedIn()) {
-      this.userService.getUserInfo();
+      this.userService.getUserInfo().finally(() => { this.isLoading = false; })
     }
+
+    this.securityService.userLoginEvent.subscribe((ev: string) => {
+      if ("userLoggedIn" == ev) {
+        this.isLoading = false;
+        this.router.navigate([`/`], { relativeTo: this.route });
+        this.openUserPage();
+      } else {
+        this.container.setParent(null);
+        this.container.setChild(null);
+        this.breadcrumb = "";
+        this.container.closeDrawer();
+      }
+    });
 
   }
 
@@ -76,4 +88,5 @@ export class AppComponent implements OnInit {
   toggleDrawer() {
     this.container.toggleDrawer();
   }
+
 }

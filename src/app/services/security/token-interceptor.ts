@@ -25,6 +25,7 @@ export class TokenInterceptorService implements HttpInterceptor {
             if (token) {
                 let headers: HttpHeaders = request.headers;
                 headers = headers.set(this.HEADER_NAME, this.BEARER + token);
+                headers = headers.set("Access-Control-Allow-Origin", "*");
                 request = request.clone({
                     headers: headers
                 });

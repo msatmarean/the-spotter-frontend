@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { UserService } from "../user-service/user-service";
+import { EventEmitter, Injectable } from "@angular/core";
+import { UserService } from "../user-service";
 import { UserInfo } from "../../model/user-info";
 import { TokenRequestModel } from "./token-request-model";
 import { environment } from "../../../environments/environment";
@@ -20,6 +20,7 @@ export class SecurityService {
     static readonly TOKEN = "token"
 
     private userLoggedIn: boolean = false;
+    userLoginEvent: EventEmitter<string> = new EventEmitter();
 
     constructor(private httpClinet: HttpClient, private userService: UserService) {
 
@@ -48,22 +49,30 @@ export class SecurityService {
 
         this.httpClinet.post(this.IDP_TOKEN_REQUEST_ENDPOINT, request).toPromise().then((token: any) => {
             sessionStorage.setItem(SecurityService.TOKEN, token.id_token);
-            this.userService.getUserInfo();
-            this.userLoggedIn = true;
+            this.userService.getUserInfo().then(() => {
+                this.userLoggedIn = true;
+                this.userLoginEvent.emit("userLoggedIn");
+            }).catch((ex: any) => { this.handleLoginFail(); });
         }).catch((ex: any) => {
-            console.debug("exception");
+            this.handleLoginFail();
         });
 
     }
 
     isUserLoggedIn(): boolean {
-        return !(sessionStorage.getItem(SecurityService.TOKEN) == null);
+        return this.userLoggedIn || !(sessionStorage.getItem(SecurityService.TOKEN) == null);
+    }
+
+    handleLoginFail() {
+        console.debug("Error login")
+        this.logOut();
     }
 
     logOut() {
         this.userLoggedIn = false;
         sessionStorage.clear();
         this.userService.userInfo = new UserInfo();
+        this.userLoginEvent.emit("userLoggedOut");
     }
 
 }

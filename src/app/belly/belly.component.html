@@ -1,137 +1,103 @@
 <div class="loading-shade" *ngIf="isLoadingResults==true">
   <mat-spinner></mat-spinner>
 </div>
-<mat-accordion multi>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Search for food
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <div class="grid-container">
-      <div class="padding10 grid1">
-        <mat-form-field class="alignInGrid" appearance="fill">
-          <mat-label>Type of food</mat-label>
-          <mat-select [(ngModel)]="selectedCategory">
-            <mat-option *ngFor="let category of foodCategories; let i = index" value="{{category.catName}}">
-              {{category.catName}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+
+<mat-expansion-panel [expanded]="false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Consumed food
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div>
+    <app-consumed-food #consumedFood></app-consumed-food>
+  </div>
+</mat-expansion-panel>
+
+<mat-form-field appearance="standard" style="width: 100%;">
+  <mat-label>Food name</mat-label>
+  <input matInput (keyup.enter)="search()" [(ngModel)]="searchTextBox" />
+  <button mat-button *ngIf="searchTextBox" matSuffix mat-icon-button aria-label="Clear" (click)="searchTextBox=''">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+<div class="justify-right">
+  <mat-icon (click)="search()">search</mat-icon>
+  <mat-icon (click)="addNewRow()">add</mat-icon>
+</div>
+<div class="justify-right">
+  <span>
+    <mat-form-field appearance="standard">
+      <mat-label>filter by category</mat-label>
+      <mat-select [(ngModel)]="selectedCategory">
+        <mat-option *ngFor="let category of foodCategories; let i = index" value={{category.catName}}
+          (click)="onCategoryChange(true)">
+          {{category.catName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button *ngIf="selectedCategory" matSuffix mat-icon-button aria-label="Clear"
+      (click)="onCategoryChange(false)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </span>
+  <span class="spacer"></span>
+  <span style="top: 50%;">
+    <mat-icon [matMenuTriggerFor]="sort">sort_by_alpha</mat-icon>
+    <mat-icon (click)="toggleSort()">{{getSortIcon()}}</mat-icon>
+    <mat-menu #sort="matMenu">
+      <button *ngFor="let opt of sortOptions; index as i" (click)="onSortChange(opt)"
+        mat-menu-item>{{opt.value}}</button>
+    </mat-menu>
+  </span>
+</div>
+
+<div class="cards-{{stateTextForStyle()}}" *ngFor="let row of data; index as i">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{row.foodDescription.name}}</mat-card-title>
+      <mat-card-subtitle>{{row.foodCategory.catName}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <div *ngIf="!row.edit">
+        <div style="margin-top: 10px; margin-bottom: 10px;">{{!!row.foodDescription.description ?
+          row.foodDescription.description : 'No description'}}</div>
+        <table class=".mat-card-content">
+          <tr>
+            <td class="mat-header-cell cdk-header-cell cdk-column-name mat-column-name ng-star-inserted"
+              style="width: 120px;">Calories:</td>
+            <td style="width: fit-content;" class="mat-cell cdk-cell cdk-column-name mat-column-name ng-star-inserted">
+              {{row.calories}}</td>
+          </tr>
+          <tr>
+            <td class="mat-header-cell cdk-header-cell cdk-column-name mat-column-name ng-star-inserted"
+              style="width: 120px;">Proteins:</td>
+            <td style="width: fit-content;" class="mat-cell cdk-cell cdk-column-name mat-column-name ng-star-inserted">
+              {{row.proteins}}</td>
+          </tr>
+          <tr>
+            <td class="mat-header-cell cdk-header-cell cdk-column-name mat-column-name ng-star-inserted"
+              style="width: 120px;">Carbohidrates:</td>
+            <td style="width: fit-content;" class="mat-cell cdk-cell cdk-column-name mat-column-name ng-star-inserted">
+              {{row.carbs}}
+            </td>
+          </tr>
+          <tr>
+            <td class="mat-header-cell cdk-header-cell cdk-column-name mat-column-name ng-star-inserted"
+              style="width: 120px;">Fats:</td>
+            <td style="width: fit-content;" class="mat-cell cdk-cell cdk-column-name mat-column-name ng-star-inserted">
+              {{row.fats}}
+            </td>
+          </tr>
+        </table>
       </div>
-      <div class="padding10 grid2">
-        <mat-form-field class="alignInGrid" appearance="fill">
-          <mat-label>Food name</mat-label>
-          <input matInput (keyup.enter)="search()" [(ngModel)]="searchTextBox" />
-        </mat-form-field>
-      </div>
-      <div class="padding10 grid3">
-        <button class="centerLeft" mat-raised-button (click)="search()">
-          Search
-        </button>
-      </div>
-    </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="add(row)">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
 
-    <div class="table-container">
-      <table mat-table #MatTable [dataSource]="data" class="table" matSort matSortActive="foodDescription.name"
-        matSortDisableClear matSortDirection="asc">
-        <ng-container matColumnDef="foodDescription.name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-          <td mat-cell *matCellDef=" let row">
-            <mat-form-field *ngIf="row.edit" appearance="fill">
-              <input matInput [(ngModel)]="row.foodDescription.name" value="{{row.foodDescription.name}}" />
-            </mat-form-field>
-            <span *ngIf="!row.edit">{{row.foodDescription.name}}</span>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="descripiton">
-          <th mat-header-cell *matHeaderCellDef>Descripiton</th>
-          <td mat-cell *matCellDef="let row">
-            <mat-form-field *ngIf="row.edit" appearance="fill">
-              <input matInput [(ngModel)]="row.foodDescription.description"
-                value="{{row.foodDescription.description}}" />
-            </mat-form-field>
-            <span *ngIf="!row.edit">{{row.foodDescription.description}}</span>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="category">
-          <th mat-header-cell *matHeaderCellDef>Category</th>
-          <td mat-cell *matCellDef="let row">
-            <mat-form-field *ngIf="row.edit" appearance="fill">
-              <mat-label>Type of food</mat-label>
-              <mat-select [(ngModel)]="row.foodCategory.catName">
-                <mat-option *ngFor="let category of foodCategories; let i = index" value="{{category.catName}}">
-                  {{category.catName}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <span *ngIf="!row.edit">{{row.foodCategory.catName}}</span>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="calories">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Calories</th>
-          <td mat-cell *matCellDef="let row">{{row.calories}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="proteins">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Proteins</th>
-          <td mat-cell *matCellDef="let row">
-            <mat-form-field *ngIf="row.edit" appearance="fill">
-              <input matInput type="number" [(ngModel)]="row.proteins" value="{{row.proteins}}" />
-            </mat-form-field>
-            <span *ngIf="!row.edit">{{row.proteins}}</span>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="carbs">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Carbohidrates
-          </th>
-          <td mat-cell *matCellDef="let row">
-            <mat-form-field *ngIf="row.edit" appearance="fill">
-              <input matInput type="number" [(ngModel)]="row.carbs" value="{{row.carbs}}" />
-            </mat-form-field>
-            <span *ngIf="!row.edit">{{row.carbs}}</span>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="fats">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Fats</th>
-          <td mat-cell *matCellDef="let row">
-            <mat-form-field *ngIf="row.edit" appearance="fill">
-              <input matInput type="number" [(ngModel)]="row.fats" value="{{row.fats}}" />
-            </mat-form-field>
-            <span *ngIf="!row.edit">{{row.fats}}</span>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let row">
-            <span style="padding-right:5px;">
-              <button mat-mini-fab (click)="add(row)">
-                <mat-icon>add</mat-icon>
-              </button>
-            </span>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-
-      <mat-paginator [length]="totalElements" [pageSize]="pageSize"></mat-paginator>
-    </div>
-  </mat-expansion-panel>
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Consumed food
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <div>
-      <app-consumed-food #consumedFood></app-consumed-food>
-    </div>
-  </mat-expansion-panel>
-</mat-accordion>
+<mat-paginator #paginator [length]="totalElements" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>

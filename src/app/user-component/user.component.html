@@ -1,67 +1,58 @@
-<mat-grid-list cols="4" rowHeight="180px">
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <div style="width: 80%;">
-      <div><img class="user-icon" src={{getPictureUrl()}}></div>
-      <div>{{getUserName()}}</div>
-    </div>
-  </mat-grid-tile>
+<div style="width: 80%;">
+  <div><img class="user-icon" src={{getPictureUrl()}}></div>
+  <div>{{getUserName()}}</div>
+</div>
 
-  <mat-grid-tile [colspan]="3" [rowspan]="1">
-  </mat-grid-tile>
+<div style="width: 100%;">
+  <div style="margin-top: 30px; margin-bottom: 30px;">
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="true" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Daily callories goal
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
-  <mat-grid-tile [colspan]="4" [rowspan]="2">
-    <div style="width: 100%;">
-      <div>
-        <mat-accordion>
-          <mat-expansion-panel [expanded]="true" hideToggle>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Daily callories goal
-              </mat-panel-title>
-            </mat-expansion-panel-header>
+        <div>
+          <mat-form-field class="example-full-width">
+            <mat-label>Total Callories</mat-label>
+            <input matInput disabled type="number" [(ngModel)]="macros.calloriesGoal" value="{{macros.calloriesGoal}}">
+          </mat-form-field>
+        </div>
 
-            <div>
-              <mat-form-field class="example-full-width">
-                <mat-label>Total Callories</mat-label>
-                <input matInput disabled type="number" [(ngModel)]="macros.calloriesGoal"
-                  value="{{macros.calloriesGoal}}">
-              </mat-form-field>
-            </div>
+        <div>
+          <mat-form-field class="example-full-width">
+            <mat-label>Proteins</mat-label>
+            <input matInput type="number" (change)="calculateCalories()" [(ngModel)]="macros.proteinsGoal"
+              value="{{macros.proteinsGoal}}">
+          </mat-form-field>
+        </div>
 
-            <div>
-              <mat-form-field class="example-full-width">
-                <mat-label>Proteins</mat-label>
-                <input matInput type="number" (change)="calculateCalories()" [(ngModel)]="macros.proteinsGoal"
-                  value="{{macros.proteinsGoal}}">
-              </mat-form-field>
-            </div>
+        <div>
+          <mat-form-field class="example-full-width">
+            <mat-label>Carbohidrates</mat-label>
+            <input matInput type="number" (change)="calculateCalories()" [(ngModel)]="macros.carbsGoal"
+              value="{{macros.carbsGoal}}">
+          </mat-form-field>
+        </div>
 
-            <div>
-              <mat-form-field class="example-full-width">
-                <mat-label>Carbohidrates</mat-label>
-                <input matInput type="number" (change)="calculateCalories()" [(ngModel)]="macros.carbsGoal"
-                  value="{{macros.carbsGoal}}">
-              </mat-form-field>
-            </div>
+        <div>
+          <mat-form-field class="example-full-width">
+            <mat-label>Fats</mat-label>
+            <input matInput type="number" (change)="calculateCalories()" [(ngModel)]="macros.fatsGoal"
+              value="{{macros.fatsGoal}}">
+          </mat-form-field>
+        </div>
 
-            <div>
-              <mat-form-field class="example-full-width">
-                <mat-label>Fats</mat-label>
-                <input matInput type="number" (change)="calculateCalories()" [(ngModel)]="macros.fatsGoal"
-                  value="{{macros.fatsGoal}}">
-              </mat-form-field>
-            </div>
-
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
-      <div style="padding:10px">
-        <button mat-mini-fab (click)=" save()">
-          <mat-icon>save</mat-icon>
-        </button>
-      </div>
-    </div>
-
-  </mat-grid-tile>
-
-</mat-grid-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div>
+    <button mat-button (click)=" save()">
+      <mat-icon>save</mat-icon>
+    </button>
+  </div>
+  <div class="loading-shade" *ngIf="isLoadingResults==true">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
