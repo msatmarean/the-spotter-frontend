@@ -10,6 +10,7 @@ import { AppContainerComponent } from "./app-container/app-container.component";
 import { UserService } from "./services/user-service";
 
 import { SecurityService } from "./services/security/security.component";
+import { SpinnerService } from "./services/spinner-service";
 
 const googleLogoURL =
   "assets/Google.svg";
@@ -22,7 +23,7 @@ const googleLogoURL =
 export class AppComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private securityService: SecurityService, private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer, private httpClinet: HttpClient, private userService: UserService, private router: Router) {
+    private domSanitizer: DomSanitizer, private httpClinet: HttpClient, public userService: UserService, private router: Router, public spinnerService: SpinnerService) {
     this.matIconRegistry.addSvgIcon(
       "logo",
       this.domSanitizer.bypassSecurityTrustResourceUrl(googleLogoURL));
@@ -32,23 +33,25 @@ export class AppComponent implements OnInit {
   selectedPage: string = "";
   @ViewChild("container")
   container: AppContainerComponent;
-  isLoading: boolean;
+
   ngOnInit(): void {
 
     this.route.queryParamMap.subscribe(params => {
       if (!this.securityService.isUserLoggedIn() && params.get("code") != null) {
-        this.isLoading = true;
+        this.spinnerService.stopSpinner()
         this.securityService.getAccessToken(params.get("state"), params.get("code"), params.get("scope"));
       }
     })
 
     if (this.securityService.isUserLoggedIn()) {
-      this.userService.getUserInfo().finally(() => { this.isLoading = false; })
+      this.userService.getUserInfo().finally(() => {
+        this.userService.getConsumedFoodInfo().finally(() => { this.spinnerService.stopSpinner(); })
+      })
     }
 
     this.securityService.userLoginEvent.subscribe((ev: string) => {
       if ("userLoggedIn" == ev) {
-        this.isLoading = false;
+        this.spinnerService.stopSpinner();
         this.router.navigate([`/`], { relativeTo: this.route });
         this.openUserPage();
       } else {

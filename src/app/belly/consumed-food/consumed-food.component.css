@@ -19,5 +19,14 @@ table {
 }
 
 .mat-cell, .mat-header-cell {
-  padding: 0px 0px 0px 0 !important;
+  padding: 0px 4px 0px 0 !important;
+}
+
+.mat-cell {
+  font-size:12px;
+}
+
+.sub-title {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }

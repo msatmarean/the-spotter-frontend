@@ -46,6 +46,14 @@ export class ManageCategories implements OnInit {
     })
   }
 
+  update() {
+    let category: FoodCategory = new FoodCategory();
+
+    this.httpClient.put(this.apiPaths.UPDATE_CATEGORIES, category).toPromise().finally(() => {
+      this.getFoodCategories();
+    });
+  }
+
   onGroupsChange(options: MatListOption[]) {
     this.selected = options.map(o => o.value);
   }

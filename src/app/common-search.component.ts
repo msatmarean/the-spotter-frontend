@@ -10,6 +10,7 @@ import { FoodDirectory } from "./model/food-directory";
 import { KeyValueModel } from "./model/key-value-model";
 import { ApiPaths } from "./services/api.paths";
 import { ApplicationStateService } from "./services/application-state.service";
+import { SpinnerService } from "./services/spinner-service";
 
 export class CommonSearchComponent {
 
@@ -23,13 +24,11 @@ export class CommonSearchComponent {
   sortOptions: KeyValueModel[] = [];
   sort: string = "foodDescription.name";
   direction: string = "asc";
-  isLoadingResults: boolean = false;
-
 
   @ViewChild("paginator") paginator: MatPaginator;
 
   constructor(private httpClient: HttpClient, private snackBar: MatSnackBar, private apiPaths: ApiPaths,
-    private applicationState: ApplicationStateService) {
+    private applicationState: ApplicationStateService, private spinnerService: SpinnerService) {
     this.initSortOptions();
     this.getFoodCategories();
   }
@@ -59,7 +58,7 @@ export class CommonSearchComponent {
     page: string,
     size: string
   ) {
-    this.isLoadingResults = true;
+    this.spinnerService.startSpinner();
     let httpParams: HttpParams = new HttpParams();
 
     if (searchTextBox != null) {
@@ -93,7 +92,7 @@ export class CommonSearchComponent {
         this.pageNumber = response.pageable.pageNumber;
       })
       .finally(() => {
-        this.isLoadingResults = false;
+        this.spinnerService.stopSpinner();
       });
   }
 
@@ -163,6 +162,18 @@ export class CommonSearchComponent {
 
   stateTextForStyle(): string {
     return this.getApplicationState().stateTextForStyle();
+  }
+
+  startSpinner() {
+    this.spinnerService.startSpinner();
+  }
+
+  stopSpinner() {
+    this.spinnerService.stopSpinner();
+  }
+
+  isSpinning(): boolean {
+    return this.spinnerService.isSpinning();
   }
 }
 

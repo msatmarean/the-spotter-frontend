@@ -19,14 +19,19 @@
 	</a>
 </mat-toolbar>
 
-<mat-toolbar *ngIf="breadcrumb!=undefined">
+<mat-toolbar>
 	<div class="breadcrumb">{{breadcrumb}}</div>
+	<span class="spacer"></span>
+	<ul class="remaining" *ngIf="userService.consumedFood">
+		<li>Remaining Calories:
+			{{userService.getAvailableCallories()}}</li>
+		<li>P{{userService.getAvailableProteins()}} C:{{userService.getAvailableCarbs()}}
+			F:{{userService.getAvailableFats()}}</li>
+	</ul>
 </mat-toolbar>
 
 <app-app-container #container (selection)="setBreadcrumb($event)"> </app-app-container>
-<div class="loading-shade" *ngIf="isLoading==true">
-	<mat-spinner></mat-spinner>
-</div>
+
 <mat-toolbar>
 	<mat-icon>accessibility_new</mat-icon>
 	<span class="title"> The Spotter</span>

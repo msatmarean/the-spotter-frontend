@@ -10,6 +10,7 @@ export class ApiPaths {
     FIND_ALL_CATEGORIES: string = this.CATEGORIES + "/getAll";
     CREATE_CATEGORIES: string = this.CATEGORIES + "/create";
     DELETE_CATEGORIES: string = this.CATEGORIES + "/delete";
+    UPDATE_CATEGORIES: string = this.CATEGORIES + "/update";
 
     FIND_FOODS: string = this.FOODS + "/find";
     CREATE_FOODS: string = this.FOODS + "/create";

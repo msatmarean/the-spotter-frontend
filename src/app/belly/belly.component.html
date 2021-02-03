@@ -1,7 +1,3 @@
-<div class="loading-shade" *ngIf="isLoadingResults==true">
-  <mat-spinner></mat-spinner>
-</div>
-
 <mat-expansion-panel [expanded]="false">
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -62,28 +58,24 @@
           row.foodDescription.description : 'No description'}}</div>
         <table class=".mat-card-content">
           <tr>
-            <td class="mat-header-cell cdk-header-cell cdk-column-name mat-column-name ng-star-inserted"
-              style="width: 120px;">Calories:</td>
-            <td style="width: fit-content;" class="mat-cell cdk-cell cdk-column-name mat-column-name ng-star-inserted">
+            <td class="mat-header-cell" style="width: 120px;">Calories:</td>
+            <td style="width: fit-content;" class="mat-cell">
               {{row.calories}}</td>
           </tr>
           <tr>
-            <td class="mat-header-cell cdk-header-cell cdk-column-name mat-column-name ng-star-inserted"
-              style="width: 120px;">Proteins:</td>
-            <td style="width: fit-content;" class="mat-cell cdk-cell cdk-column-name mat-column-name ng-star-inserted">
+            <td class="mat-header-cell" style="width: 120px;">Proteins:</td>
+            <td style="width: fit-content;" class="mat-cell">
               {{row.proteins}}</td>
           </tr>
           <tr>
-            <td class="mat-header-cell cdk-header-cell cdk-column-name mat-column-name ng-star-inserted"
-              style="width: 120px;">Carbohidrates:</td>
-            <td style="width: fit-content;" class="mat-cell cdk-cell cdk-column-name mat-column-name ng-star-inserted">
+            <td class="mat-header-cell" style="width: 120px;">Carbohidrates:</td>
+            <td style="width: fit-content;" class="mat-cell">
               {{row.carbs}}
             </td>
           </tr>
           <tr>
-            <td class="mat-header-cell cdk-header-cell cdk-column-name mat-column-name ng-star-inserted"
-              style="width: 120px;">Fats:</td>
-            <td style="width: fit-content;" class="mat-cell cdk-cell cdk-column-name mat-column-name ng-star-inserted">
+            <td class="mat-header-cell" style="width: 120px;">Fats:</td>
+            <td style="width: fit-content;" class="mat-cell">
               {{row.fats}}
             </td>
           </tr>
@@ -97,6 +89,7 @@
     </mat-card-actions>
   </mat-card>
 </div>
-
-<mat-paginator #paginator [length]="totalElements" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]">
-</mat-paginator>
+<div class="paginator">
+  <mat-paginator #paginator [length]="totalElements" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+</div>

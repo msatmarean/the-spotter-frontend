@@ -14,20 +14,18 @@ export class UserComponent implements OnInit {
 
   constructor(private userService: UserService, private securityService: SecurityService) { }
   macros: UserUpdateRequest = new UserUpdateRequest();;
-  isLoadingResults: boolean = false;
   ngOnInit(): void {
-    this.isLoadingResults = true;
     this.userService.getUserInfo().finally(() => {
 
       this.macros.carbsGoal = this.userService.userInfo.carbsGoal;
       this.macros.proteinsGoal = this.userService.userInfo.proteinsGoal;
       this.macros.fatsGoal = this.userService.userInfo.fatsGoal;
       this.macros.calloriesGoal = this.userService.userInfo.calloriesGoal;
-
-      this.isLoadingResults = false;
     }).catch((ex: any) => {
       this.securityService.logOut();
     });
+
+    this.userService.getConsumedFoodInfo();
   }
 
   save() {

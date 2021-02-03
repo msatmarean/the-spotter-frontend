@@ -4,11 +4,7 @@ import {
   HttpParams
 } from "@angular/common/http";
 import { Component, Inject, OnInit, ViewChild } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { MatSort } from "@angular/material/sort";
-import { MatTable } from "@angular/material/table";
-import { FoodCategory } from "../model/food-category";
 import { FoodDirectory } from "../model/food-directory";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { BellyEatRequst } from "../model/belly-eat-requst";
@@ -17,6 +13,7 @@ import { UserService } from "../services/user-service";
 import { ApiPaths } from "../services/api.paths";
 import { ApplicationStateService } from "../services/application-state.service";
 import { CommonSearchComponent } from "../common-search.component";
+import { SpinnerService } from "../services/spinner-service";
 @Component({
   selector: "app-belly",
   templateUrl: "./belly.component.html",
@@ -39,8 +36,9 @@ export class BellyComponent extends CommonSearchComponent {
     snackBar: MatSnackBar,
     apiPaths: ApiPaths,
     public dialog: MatDialog,
-    applicationState: ApplicationStateService) {
-    super(httpClient, snackBar, apiPaths, applicationState);
+    applicationState: ApplicationStateService,
+    private userService: UserService, spinnerService: SpinnerService) {
+    super(httpClient, snackBar, apiPaths, applicationState, spinnerService);
   }
 
 
@@ -54,13 +52,13 @@ export class BellyComponent extends CommonSearchComponent {
           request.foodId = row.id;
           request.qty = q;
           request.consumed = new Date().toJSON();
-          this.isLoadingResults = true;
+          this.startSpinner();
           this.getHttpClient()
             .post(this.getApiPaths().ADD_BELLY, request)
             .toPromise()
             .finally(() => {
-              this.isLoadingResults = false;
-              this.consumedFood.search();
+              this.stopSpinner()
+              this.userService.getConsumedFoodInfo();
             });
         }
       });

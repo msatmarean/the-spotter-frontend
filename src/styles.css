@@ -3,6 +3,7 @@
 body {
   font-family: Roboto, Arial, sans-serif;
   margin: 0;
+  background-color: #212121;
 }
 .basic-container {
   padding: 30px;
@@ -35,4 +36,8 @@ body {
 }
 .spacer {
   flex: 1 1 auto;
+}
+
+.paginator{
+  padding-top: 20px ; padding-bottom: 40px ;
 }

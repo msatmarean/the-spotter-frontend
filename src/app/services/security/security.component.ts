@@ -4,6 +4,7 @@ import { UserService } from "../user-service";
 import { UserInfo } from "../../model/user-info";
 import { TokenRequestModel } from "./token-request-model";
 import { environment } from "../../../environments/environment";
+import { SpinnerService } from "../spinner-service";
 
 @Injectable({
     providedIn: "root"
@@ -22,7 +23,7 @@ export class SecurityService {
     private userLoggedIn: boolean = false;
     userLoginEvent: EventEmitter<string> = new EventEmitter();
 
-    constructor(private httpClinet: HttpClient, private userService: UserService) {
+    constructor(private httpClinet: HttpClient, private userService: UserService, private spinnerService: SpinnerService) {
 
     }
 
@@ -40,6 +41,7 @@ export class SecurityService {
 
     getAccessToken(state: string, code: string, scope: string) {
         let request: TokenRequestModel = new TokenRequestModel();
+        this.spinnerService.startSpinner();
 
         request.client_id = this.CLIENT_ID;
         request.client_secret = this.CLIENT_SECRET;
@@ -53,9 +55,10 @@ export class SecurityService {
                 this.userLoggedIn = true;
                 this.userLoginEvent.emit("userLoggedIn");
             }).catch((ex: any) => { this.handleLoginFail(); });
+            this.userService.getConsumedFoodInfo();
         }).catch((ex: any) => {
             this.handleLoginFail();
-        });
+        }).finally(() => { this.spinnerService.stopSpinner() });
 
     }
 
@@ -71,7 +74,7 @@ export class SecurityService {
     logOut() {
         this.userLoggedIn = false;
         sessionStorage.clear();
-        this.userService.userInfo = new UserInfo();
+        this.userService.logOut();
         this.userLoginEvent.emit("userLoggedOut");
     }
 

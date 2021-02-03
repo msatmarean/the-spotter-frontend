@@ -18,7 +18,9 @@
 		</mat-nav-list>
 	</mat-drawer>
 	<mat-drawer-content class="container-content">
-		<!-- <div>{{selected}}</div> -->
+		<div class="{{isSpinnerRunning()}}">
+			<mat-spinner></mat-spinner>
+		</div>
 		<app-food-directory *ngIf="selectedParent=='Food directory' && selectedChild == 'Manage foods'">
 		</app-food-directory>
 		<manage-categories *ngIf="selectedParent=='Food directory' && selectedChild == 'Manage categories'">
@@ -26,5 +28,4 @@
 		<app-belly *ngIf="selectedParent=='Track food'"> </app-belly>
 		<user-component *ngIf="selectedParent=='User'"></user-component>
 	</mat-drawer-content>
-	<!-- drawer.toggle() -->
 </mat-drawer-container>

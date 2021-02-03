@@ -3,6 +3,17 @@
   <div>{{getUserName()}}</div>
 </div>
 
+<mat-expansion-panel [expanded]="false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Consumed food
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div>
+    <app-consumed-food #consumedFood></app-consumed-food>
+  </div>
+</mat-expansion-panel>
+
 <div style="width: 100%;">
   <div style="margin-top: 30px; margin-bottom: 30px;">
     <mat-accordion>
@@ -51,8 +62,5 @@
     <button mat-button (click)=" save()">
       <mat-icon>save</mat-icon>
     </button>
-  </div>
-  <div class="loading-shade" *ngIf="isLoadingResults==true">
-    <mat-spinner></mat-spinner>
   </div>
 </div>

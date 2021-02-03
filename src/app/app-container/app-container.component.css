@@ -1,6 +1,6 @@
 .container {
-  height: fit-content;
-  min-height: 90%;
+  height: 100%;
+  min-height: 80%;
   width: auto;
 }
 
@@ -14,4 +14,21 @@
 
 .app-sidenav {
   width: auto;
+}
+
+.show-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hide-spinner {
+  display: none;
 }

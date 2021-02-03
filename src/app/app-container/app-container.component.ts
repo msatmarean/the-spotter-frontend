@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { MatDrawer } from "@angular/material/sidenav";
 import { ApplicationStateService } from "../services/application-state.service";
+import { SpinnerService } from "../services/spinner-service";
 
 @Component({
   selector: "app-app-container",
@@ -8,7 +9,7 @@ import { ApplicationStateService } from "../services/application-state.service";
   styleUrls: ["./app-container.component.css"]
 })
 export class AppContainerComponent implements OnInit {
-  constructor(private applicationState: ApplicationStateService) {
+  constructor(private applicationState: ApplicationStateService, private spinnerService: SpinnerService) {
     this.isMobile = this.applicationState.getIsMobileResolution();
   }
 
@@ -58,5 +59,9 @@ export class AppContainerComponent implements OnInit {
 
   openDrawer() {
     this.drawer.open();
+  }
+
+  isSpinnerRunning(): string {
+    return this.spinnerService.isSpinning() ? "show-spinner" : "hide-spinner";
   }
 }

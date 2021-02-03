@@ -1,6 +1,6 @@
 <div class="table-container">
-  <table mat-table #MatTable [dataSource]="data" class="table" matSort matSortActive="food.foodDescription.name"
-    matSortDisableClear matSortDirection="asc">
+  <table mat-table #MatTable [dataSource]="userService.eachConsumedFood" class="table" matSort
+    matSortActive="food.foodDescription.name" matSortDisableClear matSortDirection="asc">
     <ng-container matColumnDef="name" class="col-name-desc">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
       <td mat-cell *matCellDef="let row">
@@ -8,14 +8,14 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="calories">
-      <th mat-header-cell *matHeaderCellDef>Calories</th>
+      <th mat-header-cell *matHeaderCellDef>Cal</th>
       <td mat-cell *matCellDef="let row">
-        <span>{{row.food.calories}}</span>
+        <span>{{userService.getRound(row.food.calories * row.qty/100)}} </span>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="qty">
-      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+      <th mat-header-cell *matHeaderCellDef>Qty</th>
       <td mat-cell *matCellDef="let row">
         <mat-form-field *ngIf="row.edit" appearance="fill">
           <input matInput type="number" [(ngModel)]="row.qty" value="{{row.qty}}" />
@@ -27,11 +27,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
-        <!-- <span style="padding-right:5px;"> -->
-        <button mat-button (click)="delete(row.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <!-- </span> -->
+        <mat-icon (click)="delete(row.id)">delete</mat-icon>
       </td>
     </ng-container>
 
@@ -40,13 +36,55 @@
   </table>
 </div>
 
-<div style="width: fit-content;">
-  <p><b>Total</b> Callories: {{calories}} | Proteins: {{proteins}} | Carbohidrates: {{carbs}} | Fats: {{fats}}</p>
-</div>
+<div class="sub-title">Consumed</div>
+<table class=".mat-card-content">
+  <tr>
+    <td class="mat-header-cell" style="width: 120px;">Calories:</td>
+    <td style="width: 100%;" class="mat-cell">
+      {{userService.getConsumedFood().calories}}</td>
+  </tr>
+  <tr>
+    <td class="mat-header-cell" style="width: 120px;">Proteins:</td>
+    <td style="width: 100%;" class="mat-cell">
+      {{userService.getConsumedFood().proteins}}</td>
+  </tr>
+  <tr>
+    <td class="mat-header-cell" style="width: 120px;">Carbohidrates:</td>
+    <td style="width: 100%;" class="mat-cell">
+      {{userService.getConsumedFood().carbs}}
+    </td>
+  </tr>
+  <tr>
+    <td class="mat-header-cell" style="width: 120px;">Fats:</td>
+    <td style="width: 100%;" class="mat-cell">
+      {{userService.getConsumedFood().fats}}
+    </td>
+  </tr>
+</table>
+
 <mat-divider></mat-divider>
-<div style="width: fit-content;">
-  <p><b>Available callories:</b> {{getAvailableCallories()}}</p>
-  <p><b> Proteins: </b> {{getAvailableProteins()}}</p>
-  <p><b>Carbohidrates:</b> {{getAvailableCarbs()}}</p>
-  <p><b>Fats:</b> {{getAvailableFats()}}</p>
-</div>
+<div class="sub-title">Remaining</div>
+<table class=".mat-card-content">
+  <tr>
+    <td class="mat-header-cell" style="width: 120px;">Calories:</td>
+    <td style="width: fit-content;" class="mat-cell">
+      {{userService.getAvailableCallories()}}</td>
+  </tr>
+  <tr>
+    <td class="mat-header-cell" style="width: 120px;">Proteins:</td>
+    <td style="width: fit-content;" class="mat-cell">
+      {{userService.getAvailableProteins()}}</td>
+  </tr>
+  <tr>
+    <td class="mat-header-cell" style="width: 120px;">Carbohidrates:</td>
+    <td style="width: fit-content;" class="mat-cell">
+      {{userService.getAvailableCarbs()}}
+    </td>
+  </tr>
+  <tr>
+    <td class="mat-header-cell" style="width: 120px;">Fats:</td>
+    <td style="width: fit-content;" class="mat-cell">
+      {{userService.getAvailableFats()}}
+    </td>
+  </tr>
+</table>

@@ -40,6 +40,7 @@ import { HttpInterceptorService } from "./services/security/http-interceptor";
 import { ApiPaths } from "./services/api.paths";
 import { MatCardModule } from '@angular/material/card';
 import { ApplicationStateService } from "./services/application-state.service";
+import { SpinnerService } from "./services/spinner-service";
 const appRoutes: Routes = [
   { path: 'home', component: AppComponent },
   { path: 'authConsumerService', component: AppComponent },
@@ -100,6 +101,7 @@ const appRoutes: Routes = [
     UserService,
     ApiPaths,
     ApplicationStateService,
+    SpinnerService,
     HttpInterceptorService,
     {
       provide: HTTP_INTERCEPTORS,

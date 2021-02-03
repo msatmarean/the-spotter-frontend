@@ -15,6 +15,7 @@ import { ApiPaths } from "../services/api.paths";
 import { KeyValueModel } from "../model/key-value-model";
 import { ApplicationStateService } from "../services/application-state.service";
 import { CommonSearchComponent } from "../common-search.component";
+import { SpinnerService } from "../services/spinner-service";
 @Component({
   selector: "app-food-directory",
   templateUrl: "./food-directory.component.html",
@@ -25,8 +26,8 @@ export class FoodDirectoryComponent extends CommonSearchComponent implements Aft
   constructor(httpClient: HttpClient,
     snackBar: MatSnackBar,
     apiPaths: ApiPaths,
-    applicationState: ApplicationStateService) {
-    super(httpClient, snackBar, apiPaths, applicationState);
+    applicationState: ApplicationStateService, spinnerService: SpinnerService) {
+    super(httpClient, snackBar, apiPaths, applicationState, spinnerService);
   }
 
   static readonly NEW_FOOD: string = "new food";
@@ -51,6 +52,7 @@ export class FoodDirectoryComponent extends CommonSearchComponent implements Aft
   }
 
   addNewRow() {
+    this.startSpinner();
     let newRow: FoodDirectory = new FoodDirectory();
     newRow.foodDescription = new FoodDescription();
     newRow.foodDescription.name = FoodDirectoryComponent.NEW_FOOD;
@@ -61,6 +63,7 @@ export class FoodDirectoryComponent extends CommonSearchComponent implements Aft
       .post(this.getApiPaths().CREATE_FOODS, newRow)
       .toPromise()
       .finally(() => {
+        this.stopSpinner();
         this.doSearch(FoodDirectoryComponent.NEW_FOOD, null, null, "0", "1");
       });
   }
@@ -70,6 +73,7 @@ export class FoodDirectoryComponent extends CommonSearchComponent implements Aft
   }
 
   save(row: FoodDirectory) {
+    this.stopSpinner();
     row.foodCategory.id = this.getFoodCategoryIdByName(
       row.foodCategory.catName
     );
@@ -78,7 +82,7 @@ export class FoodDirectoryComponent extends CommonSearchComponent implements Aft
 
     this.getHttpClient()
       .put(this.getApiPaths().UPDATE_FOODS, row)
-      .subscribe(() => { });
+      .subscribe(() => { this.stopSpinner() });
 
     this.search();
   }
@@ -88,7 +92,7 @@ export class FoodDirectoryComponent extends CommonSearchComponent implements Aft
   }
 
   delete(row: FoodDirectory) {
-    this.isLoadingResults = true;
+    this.startSpinner();
     this.getHttpClient()
       .get(this.getApiPaths().DELETE_FOODS, {
         params: new HttpParams().append("id", row.id.toString())
@@ -99,7 +103,7 @@ export class FoodDirectoryComponent extends CommonSearchComponent implements Aft
       })
       .finally(() => {
         this.search();
-        this.isLoadingResults = false;
+        this.stopSpinner();
       });
   }
 
