@@ -77,7 +77,7 @@ export class DialogElementsExampleDialog {
   constructor(public dialogRef: MatDialogRef<DialogElementsExampleDialog>) { }
 
   close() {
-    this.dialogRef.close();
+    this.dialogRef.close(this.quantity);
   }
 
   cancel() {
