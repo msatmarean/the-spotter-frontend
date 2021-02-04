@@ -1,12 +1,12 @@
 <mat-form-field appearance="standard" style="width: 100%;">
 	<mat-label>Food name</mat-label>
-	<input matInput (keyup.enter)="search()" [(ngModel)]="searchTextBox" />
+	<input matInput (keyup.enter)="onSearchclick()" [(ngModel)]="searchTextBox" />
 	<button mat-button *ngIf="searchTextBox" matSuffix mat-icon-button aria-label="Clear" (click)="searchTextBox=''">
 		<mat-icon>close</mat-icon>
 	</button>
 </mat-form-field>
 <div class="justify-right">
-	<mat-icon (click)="search()">search</mat-icon>
+	<mat-icon (click)="onSearchclick()">search</mat-icon>
 	<mat-icon (click)="addNewRow()">add</mat-icon>
 </div>
 <div class="justify-right">
@@ -66,17 +66,25 @@
 
 				<mat-form-field appearance="standard" style="width: 100%;">
 					<mat-label>Proteins</mat-label>
-					<input matInput type="number" [(ngModel)]="row.proteins" value={{row.proteins}} name="proteins" />
+					<input matInput type="number" (input)="calculateCalories(row)" [(ngModel)]="row.proteins"
+						value={{row.proteins}} name="proteins" />
 				</mat-form-field>
 
 				<mat-form-field appearance="standard" style="width: 100%;">
 					<mat-label>Carbohidrates</mat-label>
-					<input matInput type="number" [(ngModel)]="row.carbs" value={{row.carbs}} name="carbs" />
+					<input matInput type="number" (input)="calculateCalories(row)" [(ngModel)]="row.carbs"
+						value={{row.carbs}} name="carbs" />
 				</mat-form-field>
 
 				<mat-form-field appearance="standard" style="width: 100%;">
 					<mat-label>Fats</mat-label>
-					<input matInput type="number" [(ngModel)]="row.fats" value={{row.fats}} name="fats" />
+					<input matInput type="number" (input)="calculateCalories(row)" [(ngModel)]="row.fats"
+						value={{row.fats}} name="fats" />
+				</mat-form-field>
+
+				<mat-form-field appearance="standard" style="width: 100%;">
+					<mat-label>Calories</mat-label>
+					<input matInput type="number" [(ngModel)]="row.calories" value={{row.calories}} name="calories" />
 				</mat-form-field>
 			</form>
 			<div *ngIf="!row.edit">

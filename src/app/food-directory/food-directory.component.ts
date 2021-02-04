@@ -64,7 +64,11 @@ export class FoodDirectoryComponent extends CommonSearchComponent implements Aft
       .toPromise()
       .finally(() => {
         this.stopSpinner();
-        this.doSearch(FoodDirectoryComponent.NEW_FOOD, null, null, "0", "1");
+        this.doSearch(FoodDirectoryComponent.NEW_FOOD,
+          null,
+          null,
+          "0",
+          this.paginator.pageSize.toString());
       });
   }
 
@@ -77,8 +81,6 @@ export class FoodDirectoryComponent extends CommonSearchComponent implements Aft
     row.foodCategory.id = this.getFoodCategoryIdByName(
       row.foodCategory.catName
     );
-
-    this.calculateCalories(row);
 
     this.getHttpClient()
       .put(this.getApiPaths().UPDATE_FOODS, row)

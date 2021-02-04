@@ -5,7 +5,9 @@
 	<mat-icon>accessibility_new</mat-icon>
 	<span class="title"> The Spotter</span>
 	<span class="spacer"></span>
-	<img *ngIf="isUserLoggedIn()" class="user-icon" src={{getPictureUrl()}} [matMenuTriggerFor]="menu">
+	<img *ngIf="isUserLoggedIn() && getPictureUrl()" class="user-icon" src={{getPictureUrl()}}
+		[matMenuTriggerFor]="menu">
+	<mat-spinner *ngIf="isUserLoggedIn() && !getPictureUrl()"></mat-spinner>
 	<mat-menu #menu="matMenu">
 		<button mat-menu-item (click)="openUserPage()">
 			<mat-icon>person</mat-icon><span>Settings</span>

@@ -41,6 +41,16 @@ export class CommonSearchComponent {
     this.sortOptions.push(new KeyValueModel("fats", "fats"));
   }
 
+  onSearchclick() {
+    this.resetPagination();
+    this.search();
+    let activeElement = document.activeElement;
+
+    if (activeElement && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    };
+  }
+
   search() {
     this.doSearch(
       this.searchTextBox,
@@ -154,10 +164,15 @@ export class CommonSearchComponent {
   }
 
   onCategoryChange(hasValue: boolean) {
+    this.resetPagination();
     if (!hasValue) {
       this.selectedCategory = null;
     }
     this.search();
+  }
+
+  resetPagination() {
+    this.paginator.firstPage();
   }
 
   stateTextForStyle(): string {
