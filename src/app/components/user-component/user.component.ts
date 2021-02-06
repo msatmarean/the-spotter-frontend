@@ -17,9 +17,9 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUserInfo().finally(() => {
 
-      this.macros.carbsGoal = this.userService.userInfo.carbsGoal;
-      this.macros.proteinsGoal = this.userService.userInfo.proteinsGoal;
-      this.macros.fatsGoal = this.userService.userInfo.fatsGoal;
+      this.macros.carbsGoal = this.userService.userInfo.user.carbsGoal;
+      this.macros.proteinsGoal = this.userService.userInfo.user.proteinGoal;
+      this.macros.fatsGoal = this.userService.userInfo.user.fatsGoal;
       this.macros.calloriesGoal = this.userService.userInfo.calloriesGoal;
     }).catch((ex: any) => {
       this.securityService.logOut();

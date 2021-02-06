@@ -45,15 +45,18 @@ export class AppComponent implements OnInit {
 
     if (this.securityService.isUserLoggedIn()) {
       this.userService.getUserInfo().finally(() => {
-        this.userService.getConsumedFoodInfo().finally(() => { this.spinnerService.stopSpinner(); })
-      })
+        this.userService.getConsumedFoodInfo().finally(() => {
+          this.pageToOpenAfterLogin();
+          this.spinnerService.stopSpinner();
+        });
+      });
     }
 
     this.securityService.userLoginEvent.subscribe((ev: string) => {
       if ("userLoggedIn" == ev) {
         this.spinnerService.stopSpinner();
         this.router.navigate([`/`], { relativeTo: this.route });
-        this.openUserPage();
+        this.pageToOpenAfterLogin();
       } else {
         this.container.setParent(null);
         this.container.setChild(null);
@@ -62,6 +65,14 @@ export class AppComponent implements OnInit {
       }
     });
 
+  }
+
+  pageToOpenAfterLogin() {
+    if (this.userService.userInfo.calloriesGoal && this.userService.userInfo.calloriesGoal > 0) {
+      this.openTrackFoodPage();
+    } else {
+      this.openUserPage();
+    }
   }
 
   isUserLoggedIn(): boolean {
@@ -82,6 +93,10 @@ export class AppComponent implements OnInit {
 
   openUserPage() {
     this.container.setParent('User Settings');
+  }
+
+  openTrackFoodPage() {
+    this.container.setParent('Track food');
   }
 
   logOut() {

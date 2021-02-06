@@ -1,5 +1,9 @@
 <h1 mat-dialog-title>Add food</h1>
 <div mat-dialog-content>
+	<mat-form-field *ngIf="gramsPerServing>0">
+		<mat-label>Servings</mat-label>
+		<input matInput [(ngModel)]="serving" (change)="calculate()" (keyup.enter)="close()">
+	</mat-form-field>
 	<mat-form-field>
 		<mat-label>quantity in grams</mat-label>
 		<input matInput [(ngModel)]="quantity" (keyup.enter)="close()">
@@ -7,5 +11,5 @@
 </div>
 <div mat-dialog-actions>
 	<button mat-button (click)="cancel()">Cancel</button>
-	<button mat-button [mat-dialog-close]="quantity" cdkFocusInitial>Ok</button>
+	<button mat-button [mat-dialog-close]="onClose()" cdkFocusInitial>Ok</button>
 </div>

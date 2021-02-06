@@ -3,19 +3,17 @@ import { HttpParams } from "@angular/common/http";
 import {
   AfterViewInit,
   Component,
-  OnInit,
-  ViewChild
+  OnInit
 } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
 import { FoodCategory } from "../../model/food-category";
 import { FoodDirectory } from "../../model/food-directory";
 import { FoodDescription } from "../../model/food-description";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ApiPaths } from "../../services/api.paths";
-import { KeyValueModel } from "../../model/key-value-model";
 import { ApplicationStateService } from "../../services/application-state.service";
 import { CommonSearchComponent } from "../common-search.component";
 import { SpinnerService } from "../../services/spinner-service";
+import { UserService } from "src/app/services/user-service";
 @Component({
   selector: "app-food-directory",
   templateUrl: "./food-directory.component.html",
@@ -26,7 +24,9 @@ export class FoodDirectoryComponent extends CommonSearchComponent implements Aft
   constructor(httpClient: HttpClient,
     snackBar: MatSnackBar,
     apiPaths: ApiPaths,
-    applicationState: ApplicationStateService, spinnerService: SpinnerService) {
+    applicationState: ApplicationStateService,
+    spinnerService: SpinnerService,
+    public userService: UserService) {
     super(httpClient, snackBar, apiPaths, applicationState, spinnerService);
   }
 
@@ -58,6 +58,7 @@ export class FoodDirectoryComponent extends CommonSearchComponent implements Aft
     newRow.foodDescription.name = FoodDirectoryComponent.NEW_FOOD;
     newRow.foodCategory = new FoodCategory();
     newRow.foodCategory.id = 1;
+    newRow.owner = this.userService.userInfo.user;
 
     this.getHttpClient()
       .post(this.getApiPaths().CREATE_FOODS, newRow)

@@ -77,7 +77,7 @@ export class SecurityService {
     }
 
     handleLoginFail() {
-        console.debug("Error login")
+        this.snackBar.open("Login Failed", "Ok", { duration: 2000 });
         this.logOut();
     }
 

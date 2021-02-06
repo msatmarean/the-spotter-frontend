@@ -3,7 +3,7 @@ import {
   HttpErrorResponse,
   HttpParams
 } from "@angular/common/http";
-import { Component, Inject, OnInit, ViewChild } from "@angular/core";
+import { Component, Inject, Input, OnInit, ViewChild } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { FoodDirectory } from "../../model/food-directory";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
@@ -14,6 +14,7 @@ import { ApiPaths } from "../../services/api.paths";
 import { ApplicationStateService } from "../../services/application-state.service";
 import { CommonSearchComponent } from "../common-search.component";
 import { SpinnerService } from "../../services/spinner-service";
+
 @Component({
   selector: "app-belly",
   templateUrl: "./belly.component.html",
@@ -43,9 +44,13 @@ export class BellyComponent extends CommonSearchComponent {
 
 
   add(row: FoodDirectory) {
-    this.dialog
-      .open(DialogElementsExampleDialog)
-      .afterClosed()
+    let dialogRef = this.dialog.open(DialogElementsExampleDialog);
+
+    if (row.gramsPerServing > 0) {
+      dialogRef.componentInstance.gramsPerServing = row.gramsPerServing;
+    }
+
+    dialogRef.afterClosed()
       .subscribe((q: any) => {
         if (q > 0) {
           let request: BellyEatRequst = new BellyEatRequst();
@@ -72,17 +77,30 @@ export class BellyComponent extends CommonSearchComponent {
   templateUrl: "./dialog.html"
 })
 export class DialogElementsExampleDialog {
-  quantity: number = 100;
+  quantity: number = 0;
+  serving: number = 0;
+  gramsPerServing: number = 0;
+  constructor(public dialogRef: MatDialogRef<DialogElementsExampleDialog>) {
 
-  constructor(public dialogRef: MatDialogRef<DialogElementsExampleDialog>) { }
+  }
 
   close() {
-    this.dialogRef.close(this.quantity);
+    this.dialogRef.close(this.onClose());
   }
 
   cancel() {
-    this.dialogRef.close();
-    this.quantity = 0;
+    this.dialogRef.close(0);
   }
 
+  calculate() {
+    if (this.serving > 0) {
+      this.quantity = this.serving * this.gramsPerServing;
+    }
+  }
+
+  onClose(): number {
+    this.calculate();
+    return this.quantity;
+
+  }
 }

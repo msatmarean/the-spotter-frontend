@@ -28,7 +28,7 @@ export class UserService {
         this.spinnerService.startSpinner();
         return this.httpClient.get<UserInfo>(this.apiPaths.USER_INFO).toPromise().then((response: UserInfo) => {
             this.userInfo = response;
-            this.userInfo.calloriesGoal = this.calculateCalories(response.carbsGoal, response.proteinsGoal, response.fatsGoal);
+            this.userInfo.calloriesGoal = this.calculateCalories(response.user.carbsGoal, response.user.proteinGoal, response.user.fatsGoal);
             this.spinnerService.stopSpinner();
         });
     }
@@ -44,9 +44,9 @@ export class UserService {
     saveMacros(macros: UserUpdateRequest) {
         this.httpClient.put(this.apiPaths.USER_INFO, macros).subscribe(() => {
             this.userInfo.calloriesGoal = macros.calloriesGoal;
-            this.userInfo.carbsGoal = macros.carbsGoal;
-            this.userInfo.proteinsGoal = macros.proteinsGoal;
-            this.userInfo.fatsGoal = macros.fatsGoal;
+            this.userInfo.user.carbsGoal = macros.carbsGoal;
+            this.userInfo.user.proteinGoal = macros.proteinsGoal;
+            this.userInfo.user.fatsGoal = macros.fatsGoal;
         });
     }
 
@@ -103,15 +103,15 @@ export class UserService {
     }
 
     getAvailableProteins(): string {
-        return this.getRound(this.userInfo.proteinsGoal - this.getConsumedFood().proteins);
+        return this.getRound(this.userInfo.user.proteinGoal - this.getConsumedFood().proteins);
     }
 
     getAvailableCarbs(): string {
-        return this.getRound(this.userInfo.carbsGoal - this.getConsumedFood().carbs);
+        return this.getRound(this.userInfo.user.carbsGoal - this.getConsumedFood().carbs);
     }
 
     getAvailableFats(): string {
-        return this.getRound(this.userInfo.fatsGoal - this.getConsumedFood().fats);
+        return this.getRound(this.userInfo.user.fatsGoal - this.getConsumedFood().fats);
     }
 
     getRound(num: number): string {
