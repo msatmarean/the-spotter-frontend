@@ -7,8 +7,8 @@ import {
 } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { MatList, MatListOption } from "@angular/material/list";
-import { FoodCategory } from "../model/food-category";
-import { ApiPaths } from "../services/api.paths";
+import { FoodCategory } from "../../model/food-category";
+import { ApiPaths } from "../../services/api.paths";
 @Component({
   selector: "manage-categories",
   templateUrl: "./manage-categories.component.html",

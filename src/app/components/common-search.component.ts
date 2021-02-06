@@ -5,12 +5,12 @@ import {
 } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { FoodCategory } from "./model/food-category";
-import { FoodDirectory } from "./model/food-directory";
-import { KeyValueModel } from "./model/key-value-model";
-import { ApiPaths } from "./services/api.paths";
-import { ApplicationStateService } from "./services/application-state.service";
-import { SpinnerService } from "./services/spinner-service";
+import { FoodCategory } from "../model/food-category";
+import { FoodDirectory } from "../model/food-directory";
+import { KeyValueModel } from "../model/key-value-model";
+import { ApiPaths } from "../services/api.paths";
+import { ApplicationStateService } from "../services/application-state.service";
+import { SpinnerService } from "../services/spinner-service";
 
 export class CommonSearchComponent {
 

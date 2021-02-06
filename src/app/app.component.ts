@@ -6,7 +6,7 @@ import {
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AppContainerComponent } from "./app-container/app-container.component";
+import { AppContainerComponent } from "./components/app-container/app-container.component";
 import { UserService } from "./services/user-service";
 
 import { SecurityService } from "./services/security/security.component";
@@ -81,7 +81,7 @@ export class AppComponent implements OnInit {
   }
 
   openUserPage() {
-    this.container.setParent('User');
+    this.container.setParent('User Settings');
   }
 
   logOut() {

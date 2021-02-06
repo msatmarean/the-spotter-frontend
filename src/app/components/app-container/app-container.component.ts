@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { MatDrawer } from "@angular/material/sidenav";
-import { ApplicationStateService } from "../services/application-state.service";
-import { SpinnerService } from "../services/spinner-service";
+import { ApplicationStateService } from "../../services/application-state.service";
+import { SpinnerService } from "../../services/spinner-service";
 
 @Component({
   selector: "app-app-container",
@@ -41,12 +41,21 @@ export class AppContainerComponent implements OnInit {
     if (this.isMobile) {
       this.toggleDrawer()
     }
-    this.selection.emit(
-      AppContainerComponent.BREADCRUMB_DELIMITER +
-      this.selectedParent +
-      AppContainerComponent.BREADCRUMB_DELIMITER +
-      this.selectedChild
-    );
+
+    if (this.selectedParent == this.selectedChild) {
+      this.selection.emit(
+        AppContainerComponent.BREADCRUMB_DELIMITER +
+        this.selectedParent
+      );
+    } else {
+      this.selection.emit(
+        AppContainerComponent.BREADCRUMB_DELIMITER +
+        this.selectedParent +
+        AppContainerComponent.BREADCRUMB_DELIMITER +
+        this.selectedChild
+      );
+    }
+
   }
 
   toggleDrawer() {

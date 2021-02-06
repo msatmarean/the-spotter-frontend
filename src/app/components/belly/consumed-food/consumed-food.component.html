@@ -1,5 +1,5 @@
 <div class="table-container">
-  <table mat-table #MatTable [dataSource]="userService.eachConsumedFood" class="table" matSort
+  <table mat-table #MatTable [dataSource]="userService.getEachConsumedFood()" class="table" matSort
     matSortActive="food.foodDescription.name" matSortDisableClear matSortDirection="asc">
     <ng-container matColumnDef="name" class="col-name-desc">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
@@ -67,23 +67,23 @@
 <table class=".mat-card-content">
   <tr>
     <td class="mat-header-cell" style="width: 120px;">Calories:</td>
-    <td style="width: fit-content;" class="mat-cell">
+    <td style="width: 100%;" class="mat-cell">
       {{userService.getAvailableCallories()}}</td>
   </tr>
   <tr>
     <td class="mat-header-cell" style="width: 120px;">Proteins:</td>
-    <td style="width: fit-content;" class="mat-cell">
+    <td style="width: 100%;" class="mat-cell">
       {{userService.getAvailableProteins()}}</td>
   </tr>
   <tr>
     <td class="mat-header-cell" style="width: 120px;">Carbohidrates:</td>
-    <td style="width: fit-content;" class="mat-cell">
+    <td style="width: 100%;" class="mat-cell">
       {{userService.getAvailableCarbs()}}
     </td>
   </tr>
   <tr>
     <td class="mat-header-cell" style="width: 120px;">Fats:</td>
-    <td style="width: fit-content;" class="mat-cell">
+    <td style="width: 100%;" class="mat-cell">
       {{userService.getAvailableFats()}}
     </td>
   </tr>

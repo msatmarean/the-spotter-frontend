@@ -5,6 +5,8 @@ import { UserInfo } from "../../model/user-info";
 import { TokenRequestModel } from "./token-request-model";
 import { environment } from "../../../environments/environment";
 import { SpinnerService } from "../spinner-service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+
 
 @Injectable({
     providedIn: "root"
@@ -17,14 +19,15 @@ export class SecurityService {
     readonly REDIRECT_URI = environment.redirectUri;
     readonly IDP_AUTHORIZATION_CODE_REQUEST_ENDPOINT = environment.idpAuthorizationCodeRequestEndpoint;
     readonly IDP_TOKEN_REQUEST_ENDPOINT = environment.idpTokenRequestEndpoint;
-    readonly STATE = "t_LDYf9I_uZkyfdRigGsGbHpyux87I_ROfSNZUtE3f0%3D";
+
     static readonly TOKEN = "token"
 
     private userLoggedIn: boolean = false;
+    private state: string;
     userLoginEvent: EventEmitter<string> = new EventEmitter();
 
-    constructor(private httpClinet: HttpClient, private userService: UserService, private spinnerService: SpinnerService) {
-
+    constructor(private httpClinet: HttpClient, private userService: UserService, private spinnerService: SpinnerService, private snackBar: MatSnackBar,) {
+        this.state = this.createStateToken();
     }
 
     requestAuthorizationCode(): string {
@@ -33,16 +36,23 @@ export class SecurityService {
         httpParams = httpParams.append("response_type", this.RESPONSE_TYPE);
         httpParams = httpParams.append("scope", this.SCOPE);
         httpParams = httpParams.append("redirect_uri", this.REDIRECT_URI);
-        httpParams = httpParams.append("state", this.STATE);
+        httpParams = httpParams.append("state", this.state);
 
         return this.IDP_AUTHORIZATION_CODE_REQUEST_ENDPOINT + "?" + httpParams.toString();
 
     }
 
     getAccessToken(state: string, code: string, scope: string) {
-        let request: TokenRequestModel = new TokenRequestModel();
         this.spinnerService.startSpinner();
 
+        if (this.state == state) {
+            this.snackBar.open("Malicios activity detected. Go away!", "Ok", { duration: 2000 });
+            this.logOut();
+            this.spinnerService.stopSpinner();
+            return;
+        }
+
+        let request: TokenRequestModel = new TokenRequestModel();
         request.client_id = this.CLIENT_ID;
         request.client_secret = this.CLIENT_SECRET;
         request.code = code;
@@ -77,5 +87,18 @@ export class SecurityService {
         this.userService.logOut();
         this.userLoginEvent.emit("userLoggedOut");
     }
+
+    createStateToken(): string {
+        let result: string = "";
+        let chars: string = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        for (var i = 30; i > 0; --i) {
+            result += chars[Math.floor(Math.random() * chars.length)];
+        }
+
+        return result;
+    }
+
+
 
 }

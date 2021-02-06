@@ -5,15 +5,15 @@ import {
 } from "@angular/common/http";
 import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { FoodDirectory } from "../model/food-directory";
+import { FoodDirectory } from "../../model/food-directory";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { BellyEatRequst } from "../model/belly-eat-requst";
+import { BellyEatRequst } from "../../model/belly-eat-requst";
 import { ConsumedFoodComponent } from "./consumed-food/consumed-food.component";
-import { UserService } from "../services/user-service";
-import { ApiPaths } from "../services/api.paths";
-import { ApplicationStateService } from "../services/application-state.service";
+import { UserService } from "../../services/user-service";
+import { ApiPaths } from "../../services/api.paths";
+import { ApplicationStateService } from "../../services/application-state.service";
 import { CommonSearchComponent } from "../common-search.component";
-import { SpinnerService } from "../services/spinner-service";
+import { SpinnerService } from "../../services/spinner-service";
 @Component({
   selector: "app-belly",
   templateUrl: "./belly.component.html",

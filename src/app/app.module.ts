@@ -22,20 +22,20 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatToolbarModule } from "@angular/material/toolbar";
-import { AppContainerComponent } from "./app-container/app-container.component";
-import { FoodDirectoryComponent } from "./food-directory/food-directory.component";
+import { AppContainerComponent } from "./components/app-container/app-container.component";
+import { FoodDirectoryComponent } from "./components/food-directory/food-directory.component";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import {
   BellyComponent,
   DialogElementsExampleDialog
-} from "./belly/belly.component";
-import { ConsumedFoodComponent } from './belly/consumed-food/consumed-food.component';
+} from "./components/belly/belly.component";
+import { ConsumedFoodComponent } from './components/belly/consumed-food/consumed-food.component';
 import { RouterModule, Routes } from "@angular/router";
 import { SecurityService } from "./services/security/security.component";
 import { TokenInterceptorService } from "./services/security/token-interceptor";
-import { UserComponent } from "./user-component/user.component";
+import { UserComponent } from "./components/user-component/user.component";
 import { UserService } from "./services/user-service";
-import { AddCategoryDialog, ManageCategories } from "./manage-categories/manage-categories.component";
+import { AddCategoryDialog, ManageCategories } from "./components/manage-categories/manage-categories.component";
 import { HttpInterceptorService } from "./services/security/http-interceptor";
 import { ApiPaths } from "./services/api.paths";
 import { MatCardModule } from '@angular/material/card';

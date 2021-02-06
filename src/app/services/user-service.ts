@@ -65,21 +65,29 @@ export class UserService {
                 this.eachConsumedFood = response;
                 this.consumedFood = new ConsumedModel;
                 response.forEach((d: Belly) => {
-                    this.consumedFood.calories = this.consumedFood.calories + d.food.calories * (d.qty / 100);
-                    this.consumedFood.proteins = this.consumedFood.proteins + d.food.proteins * (d.qty / 100);
-                    this.consumedFood.carbs = this.consumedFood.carbs + d.food.carbs * (d.qty / 100);
-                    this.consumedFood.fats = this.consumedFood.fats + d.food.fats * (d.qty / 100);
+                    this.consumedFood.calories += this.calculateConsumedPer100g(d.food.calories, d.qty);
+                    this.consumedFood.proteins += this.calculateConsumedPer100g(d.food.proteins, d.qty);
+                    this.consumedFood.carbs += this.calculateConsumedPer100g(d.food.carbs, d.qty);
+                    this.consumedFood.fats += this.calculateConsumedPer100g(d.food.fats, d.qty / 100);
                 });
                 this.roundCounters();
                 this.spinnerService.stopSpinner();
             });
     }
 
+    calculateConsumedPer100g(amountPer100g: number, qty: number): number {
+        return amountPer100g * (qty / 100);
+    }
+
     roundCounters() {
-        this.consumedFood.calories = Math.round(this.consumedFood.calories * 100 + Number.EPSILON) / 100;
-        this.consumedFood.proteins = Math.round(this.consumedFood.proteins * 100 + Number.EPSILON) / 100;
-        this.consumedFood.carbs = Math.round(this.consumedFood.carbs * 100 + Number.EPSILON) / 100;
-        this.consumedFood.fats = Math.round(this.consumedFood.fats * 100 + Number.EPSILON) / 100;
+        this.consumedFood.calories = this.round(this.consumedFood.calories);
+        this.consumedFood.proteins = this.round(this.consumedFood.proteins);
+        this.consumedFood.carbs = this.round(this.consumedFood.carbs);
+        this.consumedFood.fats = this.round(this.consumedFood.fats);
+    }
+
+    private round(whatToRound: number): number {
+        return Math.round(whatToRound * 100 + Number.EPSILON) / 100;
     }
 
     getEachConsumedFood(): Belly[] {

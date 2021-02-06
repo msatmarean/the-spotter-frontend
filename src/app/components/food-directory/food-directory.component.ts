@@ -7,15 +7,15 @@ import {
   ViewChild
 } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
-import { FoodCategory } from "../model/food-category";
-import { FoodDirectory } from "../model/food-directory";
-import { FoodDescription } from "../model/food-description";
+import { FoodCategory } from "../../model/food-category";
+import { FoodDirectory } from "../../model/food-directory";
+import { FoodDescription } from "../../model/food-description";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { ApiPaths } from "../services/api.paths";
-import { KeyValueModel } from "../model/key-value-model";
-import { ApplicationStateService } from "../services/application-state.service";
+import { ApiPaths } from "../../services/api.paths";
+import { KeyValueModel } from "../../model/key-value-model";
+import { ApplicationStateService } from "../../services/application-state.service";
 import { CommonSearchComponent } from "../common-search.component";
-import { SpinnerService } from "../services/spinner-service";
+import { SpinnerService } from "../../services/spinner-service";
 @Component({
   selector: "app-food-directory",
   templateUrl: "./food-directory.component.html",
@@ -84,9 +84,12 @@ export class FoodDirectoryComponent extends CommonSearchComponent implements Aft
 
     this.getHttpClient()
       .put(this.getApiPaths().UPDATE_FOODS, row)
-      .subscribe(() => { this.stopSpinner() });
+      .subscribe(() => {
+        this.stopSpinner();
+        this.search();
+      });
 
-    this.search();
+
   }
 
   calculateCalories(row: FoodDirectory) {

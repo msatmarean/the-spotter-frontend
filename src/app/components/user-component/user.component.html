@@ -20,16 +20,9 @@
       <mat-expansion-panel [expanded]="true" hideToggle>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Daily callories goal
+            Daily calories goal
           </mat-panel-title>
         </mat-expansion-panel-header>
-
-        <div>
-          <mat-form-field class="example-full-width">
-            <mat-label>Total Callories</mat-label>
-            <input matInput disabled type="number" [(ngModel)]="macros.calloriesGoal" value="{{macros.calloriesGoal}}">
-          </mat-form-field>
-        </div>
 
         <div>
           <mat-form-field class="example-full-width">
@@ -52,6 +45,13 @@
             <mat-label>Fats</mat-label>
             <input matInput type="number" (change)="calculateCalories()" [(ngModel)]="macros.fatsGoal"
               value="{{macros.fatsGoal}}">
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="example-full-width">
+            <mat-label>Total Callories</mat-label>
+            <input matInput disabled type="number" [(ngModel)]="macros.calloriesGoal" value="{{macros.calloriesGoal}}">
           </mat-form-field>
         </div>
 

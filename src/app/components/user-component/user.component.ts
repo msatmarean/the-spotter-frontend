@@ -1,8 +1,8 @@
 
 import { Component, Input, OnInit } from "@angular/core";
-import { UserUpdateRequest } from "../model/user-update-request";
-import { SecurityService } from "../services/security/security.component";
-import { UserService } from "../services/user-service";
+import { UserUpdateRequest } from "../../model/user-update-request";
+import { SecurityService } from "../../services/security/security.component";
+import { UserService } from "../../services/user-service";
 
 
 @Component({

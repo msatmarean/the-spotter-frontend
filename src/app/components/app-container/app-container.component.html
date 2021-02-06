@@ -15,6 +15,10 @@
 				<span>Manage categories</span>
 			</mat-list-item>
 			<mat-divider></mat-divider>
+			<mat-list-item (click)=" setParent('User Settings')" (click)=" setChild('User Settings')">
+				<mat-icon>person</mat-icon>User settings
+			</mat-list-item>
+			<mat-divider></mat-divider>
 		</mat-nav-list>
 	</mat-drawer>
 	<mat-drawer-content class="container-content">
@@ -26,6 +30,6 @@
 		<manage-categories *ngIf="selectedParent=='Food directory' && selectedChild == 'Manage categories'">
 		</manage-categories>
 		<app-belly *ngIf="selectedParent=='Track food'"> </app-belly>
-		<user-component *ngIf="selectedParent=='User'"></user-component>
+		<user-component *ngIf="selectedParent=='User Settings'"></user-component>
 	</mat-drawer-content>
 </mat-drawer-container>
