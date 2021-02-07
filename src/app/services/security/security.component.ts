@@ -67,6 +67,7 @@ export class SecurityService {
             }).catch((ex: any) => { this.handleLoginFail(); });
             this.userService.getConsumedFoodInfo();
         }).catch((ex: any) => {
+            console.debug(ex);
             this.handleLoginFail();
         }).finally(() => { this.spinnerService.stopSpinner() });
 
