@@ -24,7 +24,7 @@
 <mat-toolbar>
 	<div class="breadcrumb">{{breadcrumb}}</div>
 	<span class="spacer"></span>
-	<ul class="remaining" *ngIf="userService.consumedFood">
+	<ul class="remaining" *ngIf="userService.consumedFood && userService.userInfo.user">
 		<li>Remaining Calories:
 			{{userService.getAvailableCallories()}}</li>
 		<li>P{{userService.getAvailableProteins()}} C:{{userService.getAvailableCarbs()}}
