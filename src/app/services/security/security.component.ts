@@ -64,9 +64,14 @@ export class SecurityService {
             this.userService.getUserInfo().then(() => {
                 this.userLoggedIn = true;
                 this.userLoginEvent.emit("userLoggedIn");
-            }).catch((ex: any) => { this.handleLoginFail(); });
+            }).catch((ex: any) => {
+                console.debug("catch1");
+                console.debug(ex);
+                this.handleLoginFail();
+            });
             this.userService.getConsumedFoodInfo();
         }).catch((ex: any) => {
+            console.debug("catch2");
             console.debug(ex);
             this.handleLoginFail();
         }).finally(() => { this.spinnerService.stopSpinner() });
